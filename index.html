@@ -1,1176 +1,1463 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Qlarity — HVAC Revenue Infrastructure</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<meta name="description" content="Qlarity installs revenue recovery systems for HVAC contractors. We recover the money your operation is already generating but not fully capturing."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --black:    #06080C;
-  --navy:     #0A1118;
-  --charcoal: #111B26;
-  --card:     #0F1822;
-  --card2:    #121E2B;
-  --border:   rgba(255,255,255,0.06);
-  --border2:  rgba(255,255,255,0.1);
-  --white:    #EDF0F5;
-  --offwhite: #C8D0DC;
-  --muted:    #6B7A8D;
-  --gold:     #C4A44A;
-  --gold-lt:  #D9BC72;
-  --blue:     #1A6EFF;
-  --blue-lt:  #4A8FFF;
-  --red:      #E5334A;
+/* ─── RESET & ROOT ─────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:      #05070A;
+  --deep:     #080E17;
+  --navy:     #0B1420;
+  --surface:  #0F1B27;
+  --surface2: #132030;
+  --line:     rgba(255,255,255,0.06);
+  --line2:    rgba(255,255,255,0.11);
+  --white:    #F0F3F7;
+  --offwhite: #C9D2DF;
+  --muted:    #637485;
+  --faint:    #3A4755;
+  --gold:     #C6A84E;
+  --gold2:    #DCC070;
+  --gold3:    rgba(198,168,78,0.12);
+  --gold4:    rgba(198,168,78,0.06);
+  --red:      #D93E52;
+  --red2:     rgba(217,62,82,0.08);
+  --green:    #2ECC8A;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{
+  background:var(--ink);
+  color:var(--white);
+  font-family:'DM Sans',sans-serif;
+  font-weight:400;
+  line-height:1.65;
+  overflow-x:hidden;
 }
 
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--black);
-  color: var(--white);
-  font-family: 'Barlow', sans-serif;
-  font-weight: 400;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
+/* ─── GRID TEXTURE ─────────────────────────────────────────────────────────── */
+body::before{
+  content:'';position:fixed;inset:0;
   background-image:
-    linear-gradient(rgba(196,164,74,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(196,164,74,0.02) 1px, transparent 1px);
-  background-size: 64px 64px;
-  pointer-events: none;
-  z-index: 0;
+    linear-gradient(rgba(198,168,78,0.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(198,168,78,0.018) 1px,transparent 1px);
+  background-size:72px 72px;
+  pointer-events:none;z-index:0;
 }
 
-/* NAV */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 200;
-  padding: 0 64px;
-  height: 68px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(6,8,12,0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+/* ─── TYPOGRAPHY ───────────────────────────────────────────────────────────── */
+.display{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(76px,10vw,126px);
+  line-height:0.9;letter-spacing:0.015em;
+  color:var(--white);
+}
+.display em{color:var(--gold);font-style:normal}
+
+h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(44px,6vw,72px);
+  line-height:0.95;letter-spacing:0.02em;
+  color:var(--white);
+}
+h2 em{color:var(--gold);font-style:normal}
+h2 b{color:var(--red);font-style:normal;font-weight:inherit}
+
+h3{
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;font-size:20px;
+  letter-spacing:-0.01em;color:var(--white);
+  line-height:1.3;
 }
 
-.nav-logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
+.serif-quote{
+  font-family:'DM Serif Display',serif;
+  font-style:italic;
+  font-size:clamp(22px,3vw,30px);
+  line-height:1.4;
+  color:var(--offwhite);
+  letter-spacing:-0.01em;
 }
 
-.logo-wordmark {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 26px;
-  letter-spacing: 0.12em;
-  color: var(--white);
-  line-height: 1;
+.eyebrow{
+  display:inline-block;
+  font-size:10px;font-weight:600;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:18px;
 }
-.logo-wordmark .q-gold { color: var(--gold); }
+.eyebrow.dim{color:var(--muted)}
+.eyebrow.white{color:var(--offwhite)}
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  list-style: none;
+/* ─── LAYOUT ───────────────────────────────────────────────────────────────── */
+section{position:relative;z-index:1}
+.container{max-width:1160px;margin:0 auto;padding:0 52px}
+.container-sm{max-width:820px;margin:0 auto;padding:0 52px}
+.container-xs{max-width:640px;margin:0 auto;padding:0 52px}
+
+/* ─── BUTTONS ──────────────────────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'DM Sans',sans-serif;font-weight:600;
+  font-size:14px;letter-spacing:0.04em;text-transform:uppercase;
+  text-decoration:none;border:none;cursor:pointer;
+  border-radius:2px;position:relative;overflow:hidden;
 }
-
-.nav-links a {
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: color 0.2s;
-  cursor: pointer;
+.btn::before{
+  content:'';position:absolute;top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent);
+  transition:left 0.55s ease;pointer-events:none;
 }
-.nav-links a:hover { color: var(--white); }
+.btn:hover::before{left:100%}
 
-.btn-nav {
-  background: var(--gold) !important;
-  color: var(--black) !important;
-  padding: 10px 22px !important;
-  border-radius: 2px;
-  font-weight: 700 !important;
-  font-size: 12px !important;
-  letter-spacing: 0.1em !important;
-  white-space: nowrap;
+.btn-gold{
+  background:var(--gold);color:var(--ink);
+  padding:16px 36px;
+  transition:background 0.3s,transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;
 }
-.btn-nav:hover { background: var(--gold-lt) !important; color: var(--black) !important; }
-
-section { position: relative; z-index: 1; }
-.container { max-width: 1140px; margin: 0 auto; padding: 0 48px; }
-
-.btn-primary {
-  display: inline-block;
-  background: var(--gold);
-  color: var(--black);
-  padding: 16px 36px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-decoration: none;
-  border-radius: 2px;
-  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-  cursor: pointer;
-  border: none;
+.btn-gold:hover{
+  background:var(--gold2);
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 14px 40px rgba(198,168,78,0.35),0 4px 12px rgba(198,168,78,0.2);
 }
-.btn-primary:hover { background: var(--gold-lt); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(196,164,74,0.25); }
+.btn-gold:active{transform:translateY(-1px) scale(0.98);transition-duration:0.08s}
 
-.btn-outline {
-  display: inline-block;
-  background: transparent;
-  color: var(--white);
-  padding: 15px 34px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-decoration: none;
-  border-radius: 2px;
-  border: 1px solid rgba(255,255,255,0.2);
-  transition: border-color 0.2s, background 0.2s;
-  cursor: pointer;
+.btn-gold-lg{
+  background:var(--gold);color:var(--ink);
+  padding:19px 48px;font-size:15px;
+  transition:background 0.3s,transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;
 }
-.btn-outline:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.04); }
+.btn-gold-lg:hover{
+  background:var(--gold2);
+  transform:translateY(-4px) scale(1.02);
+  box-shadow:0 18px 52px rgba(198,168,78,0.4),0 6px 16px rgba(198,168,78,0.25);
+}
+.btn-gold-lg:active{transform:translateY(-1px) scale(0.98);transition-duration:0.08s}
 
-.eyebrow {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 20px;
+.btn-ghost{
+  background:transparent;color:var(--white);
+  padding:15px 34px;
+  border:1px solid rgba(255,255,255,0.18);
+  transition:border-color 0.3s,background 0.3s,transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;
 }
-.eyebrow.blue { color: var(--blue-lt); }
+.btn-ghost:hover{
+  border-color:rgba(255,255,255,0.5);
+  background:rgba(255,255,255,0.04);
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 8px 28px rgba(255,255,255,0.07);
+}
+.btn-ghost:active{transform:translateY(-1px) scale(0.98);transition-duration:0.08s}
 
-h1 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(72px, 9vw, 112px);
-  line-height: 0.93;
-  letter-spacing: 0.02em;
-  color: var(--white);
-  margin-bottom: 28px;
+/* Arrow icon in button */
+.btn-arrow{
+  width:16px;height:16px;
+  transition:transform 0.25s ease;
 }
-h1 em { color: var(--gold); font-style: normal; }
+.btn:hover .btn-arrow{transform:translateX(4px)}
 
-h2 {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: clamp(38px, 5vw, 58px);
-  line-height: 1.02;
-  letter-spacing: -0.01em;
-  color: var(--white);
+/* ─── NAV ──────────────────────────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  padding:0 52px;height:70px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(5,7,10,0.88);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+  transition:background 0.3s;
 }
-h2 em { color: var(--gold); font-style: normal; }
-h2 span { color: var(--red); }
+.nav-scrolled{background:rgba(5,7,10,0.97)!important}
 
-h3 {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 22px;
-  letter-spacing: 0.01em;
-  color: var(--white);
+.nav-logo{text-decoration:none;display:flex;align-items:center}
+.nav-wordmark{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px;letter-spacing:0.14em;color:var(--white);
+  line-height:1;
 }
+.nav-wordmark .q{color:var(--gold)}
 
-/* HERO */
-#hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: 140px 0 100px;
-  overflow: hidden;
-  background: var(--black);
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{
+  color:var(--muted);text-decoration:none;
+  font-size:12px;font-weight:500;
+  letter-spacing:0.07em;text-transform:uppercase;
+  transition:color 0.25s;position:relative;
 }
+.nav-links a::after{
+  content:'';position:absolute;bottom:-5px;left:0;
+  width:0;height:1px;background:var(--gold);
+  transition:width 0.32s ease;
+}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{width:100%}
 
-.hero-bg-glow {
-  position: absolute;
-  top: -200px; right: -300px;
-  width: 900px; height: 900px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(196,164,74,0.05) 0%, transparent 65%);
-  pointer-events: none;
+.nav-cta{
+  background:var(--gold);color:var(--ink)!important;
+  padding:9px 20px;border-radius:2px;
+  font-weight:700!important;font-size:11px!important;
+  letter-spacing:0.1em!important;
+  position:relative;overflow:hidden;
+  transition:background 0.3s,transform 0.2s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s!important;
 }
-.hero-bg-glow2 {
-  position: absolute;
-  bottom: -100px; left: -200px;
-  width: 600px; height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(26,110,255,0.04) 0%, transparent 65%);
-  pointer-events: none;
+.nav-cta::before{
+  content:'';position:absolute;top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent);
+  transition:left 0.5s ease;pointer-events:none;
+}
+.nav-cta:hover::before{left:100%}
+.nav-cta:hover{
+  background:var(--gold2)!important;
+  transform:translateY(-2px) scale(1.03)!important;
+  box-shadow:0 8px 22px rgba(198,168,78,0.32)!important;
+}
+.nav-cta::after{display:none!important}
+
+/* ─── HERO ─────────────────────────────────────────────────────────────────── */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding:140px 0 100px;
+  overflow:hidden;
+  background:var(--ink);
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1fr 420px;
-  gap: 80px;
-  align-items: center;
+.hero-orb{
+  position:absolute;
+  border-radius:50%;pointer-events:none;
+}
+.hero-orb-1{
+  top:-20%;right:-15%;
+  width:800px;height:800px;
+  background:radial-gradient(ellipse,rgba(198,168,78,0.055) 0%,transparent 62%);
+}
+.hero-orb-2{
+  bottom:-10%;left:-10%;
+  width:600px;height:600px;
+  background:radial-gradient(ellipse,rgba(11,20,32,0.9) 0%,transparent 60%);
+}
+.hero-orb-3{
+  top:30%;left:30%;
+  width:400px;height:400px;
+  background:radial-gradient(ellipse,rgba(198,168,78,0.025) 0%,transparent 60%);
 }
 
-.hero-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(196,164,74,0.08);
-  border: 1px solid rgba(196,164,74,0.25);
-  padding: 8px 18px;
-  border-radius: 2px;
-  margin-bottom: 32px;
-}
-.hero-tag-dot {
-  width: 6px; height: 6px;
-  background: var(--gold);
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
-.hero-tag span {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--gold);
+.hero-layout{
+  display:grid;
+  grid-template-columns:1fr 400px;
+  gap:72px;align-items:center;
 }
 
-.hero-sub {
-  font-size: 20px;
-  font-weight: 300;
-  color: var(--muted);
-  line-height: 1.65;
-  margin-bottom: 48px;
-  max-width: 560px;
+/* Status pill */
+.hero-status{
+  display:inline-flex;align-items:center;gap:9px;
+  background:rgba(198,168,78,0.07);
+  border:1px solid rgba(198,168,78,0.22);
+  padding:7px 16px;border-radius:40px;
+  margin-bottom:36px;
+}
+.status-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 0 0 rgba(46,204,138,0.5);
+  animation:statusPulse 2.2s ease infinite;
+}
+@keyframes statusPulse{
+  0%{box-shadow:0 0 0 0 rgba(46,204,138,0.5)}
+  70%{box-shadow:0 0 0 7px rgba(46,204,138,0)}
+  100%{box-shadow:0 0 0 0 rgba(46,204,138,0)}
+}
+.status-text{
+  font-size:11px;font-weight:600;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold);
 }
 
-.hero-ctas {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 60px;
+.hero-sub{
+  font-size:19px;font-weight:300;
+  color:var(--muted);line-height:1.7;
+  margin-top:24px;margin-bottom:48px;
+  max-width:540px;
+}
+.hero-sub strong{color:var(--offwhite);font-weight:500}
+
+.hero-ctas{
+  display:flex;gap:14px;flex-wrap:wrap;
+  align-items:center;margin-bottom:64px;
 }
 
-.hero-proof {
-  display: flex;
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  overflow: hidden;
+.hero-proof-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border:1px solid var(--line2);border-radius:3px;
+  overflow:hidden;
+  background:rgba(255,255,255,0.015);
 }
-.hero-proof-item {
-  padding: 20px 28px;
-  border-right: 1px solid var(--border);
-  flex: 1;
+.hp-item{
+  padding:18px 22px;
+  border-right:1px solid var(--line);
+  transition:background 0.25s;
 }
-.hero-proof-item:last-child { border-right: none; }
-.hero-proof-num {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 28px;
-  color: var(--white);
-  line-height: 1;
-  margin-bottom: 4px;
-  letter-spacing: -0.02em;
+.hp-item:last-child{border-right:none}
+.hp-item:hover{background:var(--gold4)}
+.hp-val{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:30px;line-height:1;
+  letter-spacing:0.02em;
+  color:var(--white);margin-bottom:4px;
 }
-.hero-proof-num em { color: var(--gold); font-style: normal; }
-.hero-proof-label {
-  font-size: 12px;
-  color: var(--muted);
-  letter-spacing: 0.03em;
-  line-height: 1.35;
+.hp-val em{color:var(--gold);font-style:normal}
+.hp-label{font-size:11px;color:var(--muted);line-height:1.35;letter-spacing:0.02em}
+
+/* ─── HERO PANEL (right side) ──────────────────────────────────────────────── */
+.revenue-panel{
+  background:var(--surface);
+  border:1px solid var(--line2);
+  border-radius:6px;overflow:hidden;
+  box-shadow:0 40px 80px rgba(0,0,0,0.5),0 0 0 1px rgba(198,168,78,0.06);
+}
+.rp-header{
+  background:var(--surface2);
+  border-bottom:1px solid var(--line);
+  padding:14px 22px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.rp-title{font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)}
+.rp-live{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--green);font-weight:600;letter-spacing:0.08em}
+.rp-live-dot{width:5px;height:5px;background:var(--green);border-radius:50%}
+
+.rp-body{padding:22px 22px 20px}
+
+.rp-section-label{
+  font-size:9px;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:12px;
 }
 
-/* Hero panel */
-.hero-panel {
-  background: var(--card);
-  border: 1px solid var(--border2);
-  border-radius: 4px;
-  overflow: hidden;
+.rp-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:11px 0;border-bottom:1px solid var(--line);
 }
-.panel-header {
-  background: var(--card2);
-  border-bottom: 1px solid var(--border);
-  padding: 16px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.panel-header-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.panel-status {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: #3DDB7F;
-  font-weight: 600;
-}
-.panel-status-dot {
-  width: 6px; height: 6px;
-  background: #3DDB7F;
-  border-radius: 50%;
-}
-.panel-body { padding: 28px 24px; }
-.panel-leak-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border);
-}
-.panel-leak-row:last-of-type { border-bottom: none; }
-.leak-name { font-size: 13px; color: var(--offwhite); font-weight: 500; }
-.leak-amount {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 18px;
-  color: var(--red);
-  letter-spacing: -0.01em;
-}
-.panel-total-row {
-  margin-top: 20px;
-  padding: 18px 20px;
-  background: rgba(229,51,74,0.06);
-  border: 1px solid rgba(229,51,74,0.15);
-  border-radius: 3px;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-.panel-total-label {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.panel-total-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 38px;
-  color: var(--red);
-  letter-spacing: 0.02em;
-  line-height: 1;
-}
-.panel-cta {
-  margin-top: 20px;
-  width: 100%;
-  text-align: center;
-  display: block;
-  background: var(--gold);
-  color: var(--black);
-  padding: 14px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-decoration: none;
-  border-radius: 2px;
-  transition: background 0.2s;
-}
-.panel-cta:hover { background: var(--gold-lt); }
-.panel-footnote {
-  text-align: center;
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 12px;
-  line-height: 1.4;
+.rp-row:last-of-type{border-bottom:none}
+.rp-name{font-size:12px;color:var(--offwhite);font-weight:500}
+.rp-amount{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:17px;color:var(--red);
+  letter-spacing:0.02em;
 }
 
-/* TICKER */
-.ticker-bar {
-  background: rgba(196,164,74,0.05);
-  border-top: 1px solid rgba(196,164,74,0.12);
-  border-bottom: 1px solid rgba(196,164,74,0.12);
-  padding: 12px 0;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
+.rp-total{
+  margin-top:16px;
+  background:rgba(217,62,82,0.06);
+  border:1px solid rgba(217,62,82,0.16);
+  border-radius:3px;padding:16px 18px;
+  display:flex;justify-content:space-between;align-items:baseline;
 }
-.ticker-inner {
-  display: flex;
-  gap: 80px;
-  animation: ticker 30s linear infinite;
-  white-space: nowrap;
-}
-@keyframes ticker { 0%{transform:translateX(0)}100%{transform:translateX(-50%)} }
-.ticker-item {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gold);
-  opacity: 0.8;
-  flex-shrink: 0;
-}
-.ticker-item span { color: var(--muted); margin: 0 12px; }
-
-/* PROBLEM */
-#problem {
-  padding: 128px 0;
-  background: var(--navy);
-  border-bottom: 1px solid var(--border);
-}
-.problem-intro {
-  max-width: 700px;
-  margin-bottom: 72px;
-}
-.problem-intro p {
-  font-size: 20px;
-  font-weight: 300;
-  color: var(--muted);
-  line-height: 1.7;
-  margin-top: 20px;
-}
-.problem-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  margin-bottom: 64px;
-}
-.problem-card {
-  background: var(--card);
-  padding: 36px 32px;
-  border: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
-  transition: border-color 0.25s;
-}
-.problem-card:hover { border-color: rgba(229,51,74,0.3); }
-.problem-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--red);
-  opacity: 0.6;
-}
-.problem-dollar {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 52px;
-  color: var(--red);
-  line-height: 1;
-  margin-bottom: 8px;
-  letter-spacing: 0.02em;
-}
-.problem-card h3 { font-size: 18px; margin-bottom: 10px; }
-.problem-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
-
-.problem-statement {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--red);
-  padding: 36px 44px;
-  border-radius: 0 3px 3px 0;
-  max-width: 860px;
-}
-.problem-statement p {
-  font-size: 20px;
-  font-style: italic;
-  color: var(--offwhite);
-  line-height: 1.6;
+.rp-total-label{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted)}
+.rp-total-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:42px;color:var(--red);
+  letter-spacing:0.02em;line-height:1;
 }
 
-/* INSTALL */
-#install { padding: 128px 0; }
-.install-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: end;
-  margin-bottom: 72px;
+.rp-cta{
+  display:block;margin-top:16px;
+  background:var(--gold);color:var(--ink);
+  text-align:center;padding:13px;
+  font-family:'DM Sans',sans-serif;font-weight:700;
+  font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
+  text-decoration:none;border-radius:2px;
+  position:relative;overflow:hidden;
+  transition:background 0.3s,transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;
 }
-.install-header p { font-size: 17px; color: var(--muted); line-height: 1.7; }
+.rp-cta::before{
+  content:'';position:absolute;top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
+  transition:left 0.5s ease;pointer-events:none;
+}
+.rp-cta:hover::before{left:100%}
+.rp-cta:hover{
+  background:var(--gold2);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(198,168,78,0.3);
+}
+.rp-note{font-size:10px;color:var(--faint);text-align:center;margin-top:10px;line-height:1.5}
 
-.modules-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+/* ─── TRUST BAR ─────────────────────────────────────────────────────────────── */
+#trust-bar{
+  padding:28px 0;
+  background:rgba(255,255,255,0.015);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  position:relative;z-index:1;
 }
-.module-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  padding: 44px 40px;
-  border-radius: 3px;
-  position: relative;
-  overflow: hidden;
-  transition: border-color 0.25s, transform 0.2s;
+.trust-inner{
+  display:flex;align-items:center;justify-content:center;
+  gap:56px;flex-wrap:wrap;
 }
-.module-card:hover { border-color: rgba(196,164,74,0.3); transform: translateY(-2px); }
-.module-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, var(--gold), transparent);
-  opacity: 0;
-  transition: opacity 0.3s;
+.trust-item{
+  display:flex;align-items:center;gap:10px;
+  font-size:12px;font-weight:500;
+  letter-spacing:0.04em;color:var(--muted);
+  white-space:nowrap;
 }
-.module-card:hover::after { opacity: 1; }
-.module-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 72px;
-  line-height: 1;
-  color: rgba(255,255,255,0.04);
-  position: absolute;
-  top: 20px; right: 24px;
-  pointer-events: none;
-}
-.module-icon-wrap {
-  width: 48px; height: 48px;
-  background: rgba(196,164,74,0.07);
-  border: 1px solid rgba(196,164,74,0.18);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 24px;
-}
-.module-icon-wrap svg {
-  width: 22px; height: 22px;
-  stroke: var(--gold);
-  fill: none;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.module-card h3 { font-size: 21px; margin-bottom: 12px; }
-.module-card p { font-size: 15px; color: var(--muted); line-height: 1.65; }
-.module-result {
-  display: inline-block;
-  margin-top: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold);
-  padding: 6px 14px;
-  background: rgba(196,164,74,0.07);
-  border: 1px solid rgba(196,164,74,0.18);
-  border-radius: 2px;
+.trust-icon{
+  width:16px;height:16px;
+  stroke:var(--gold);fill:none;
+  stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;
+  flex-shrink:0;
 }
 
-/* HOW */
-#how {
-  padding: 128px 0;
-  background: var(--navy);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.steps-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  margin-top: 64px;
-}
-.step-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  padding: 44px 36px;
-  position: relative;
-  transition: border-color 0.25s;
-}
-.step-card:hover { border-color: rgba(196,164,74,0.25); }
-.step-number-bg {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 120px;
-  line-height: 1;
-  color: rgba(196,164,74,0.04);
-  position: absolute;
-  top: 10px; right: 16px;
-  pointer-events: none;
-}
-.step-num-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px; height: 40px;
-  border: 1.5px solid var(--gold);
-  border-radius: 3px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 18px;
-  color: var(--gold);
-  margin-bottom: 24px;
-}
-.step-title-tag {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 8px;
-  display: block;
-}
-.step-card h3 { font-size: 22px; margin-bottom: 14px; }
-.step-card p { font-size: 15px; color: var(--muted); line-height: 1.65; }
+/* ─── SECTION SHARED ────────────────────────────────────────────────────────── */
+.section-pad{padding:120px 0}
+.section-pad-lg{padding:144px 0}
+.bg-navy{background:var(--navy);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.bg-surface{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.bg-deep{background:var(--deep)}
 
-/* DIFFERENT */
-#different { padding: 128px 0; }
-.different-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 96px;
-  align-items: start;
+/* ─── PROBLEM ───────────────────────────────────────────────────────────────── */
+#problem .problem-intro{max-width:680px;margin-bottom:80px}
+#problem .lead{
+  font-size:21px;font-weight:300;color:var(--muted);
+  line-height:1.7;margin-top:20px;
 }
-.not-list {
-  list-style: none;
-  margin-top: 36px;
+#problem .lead strong{color:var(--offwhite);font-weight:500}
+
+.pain-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;margin-bottom:72px;
 }
-.not-list li {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding: 18px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 17px;
-  font-weight: 400;
-  color: var(--offwhite);
+.pain-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  padding:40px 32px;
+  position:relative;overflow:hidden;
+  transition:border-color 0.35s,transform 0.3s cubic-bezier(0.34,1.4,0.64,1),box-shadow 0.35s;
 }
-.not-dash { flex-shrink: 0; width: 24px; height: 2px; background: rgba(255,255,255,0.12); }
-.diff-right-body { margin-top: 32px; }
-.diff-right-body p { font-size: 17px; color: var(--muted); line-height: 1.75; margin-bottom: 20px; }
-.diff-close-box {
-  background: var(--card);
-  border-left: 3px solid var(--blue);
-  padding: 24px 28px;
-  border-radius: 0 3px 3px 0;
-  font-size: 16px;
-  color: var(--offwhite);
-  font-style: italic;
-  line-height: 1.6;
-  margin-top: 32px;
+.pain-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:var(--red);opacity:0.5;
+}
+.pain-card:hover{
+  border-color:rgba(217,62,82,0.3);
+  transform:translateY(-5px);
+  box-shadow:0 20px 50px rgba(217,62,82,0.07),0 0 0 1px rgba(217,62,82,0.07);
+}
+.pain-stat{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:58px;line-height:1;
+  color:var(--red);letter-spacing:0.02em;
+  margin-bottom:10px;
+  transition:text-shadow 0.3s;
+}
+.pain-card:hover .pain-stat{text-shadow:0 0 28px rgba(217,62,82,0.35)}
+.pain-card h3{font-size:17px;margin-bottom:10px;font-weight:600}
+.pain-card p{font-size:14px;color:var(--muted);line-height:1.65}
+
+.truth-block{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-left:3px solid var(--red);
+  padding:40px 48px;
+  border-radius:0 4px 4px 0;
+  max-width:840px;
+}
+.truth-block .serif-quote{font-size:clamp(20px,2.5vw,26px)}
+
+/* ─── SYSTEM REVEAL ─────────────────────────────────────────────────────────── */
+#system{padding:120px 0}
+.system-intro-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:end;margin-bottom:80px;
+}
+.system-intro-grid p{font-size:17px;color:var(--muted);line-height:1.75}
+.system-intro-grid strong{color:var(--offwhite);font-weight:500}
+
+.modules{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+.mod{
+  background:var(--surface);
+  border:1px solid var(--line);
+  padding:44px 40px;border-radius:3px;
+  position:relative;overflow:hidden;
+  transition:border-color 0.35s,transform 0.3s cubic-bezier(0.34,1.4,0.64,1),box-shadow 0.35s,background 0.3s;
+}
+.mod-glow{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(198,168,78,0.07) 0%,transparent 70%);
+  opacity:0;transition:opacity 0.4s;pointer-events:none;
+}
+.mod-line{
+  position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),rgba(198,168,78,0.2),var(--gold));
+  background-size:200% 100%;
+  opacity:0;transition:opacity 0.35s;
+  animation:shimLine 2.5s linear infinite;
+}
+@keyframes shimLine{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.mod-num{
+  font-family:'Bebas Neue',sans-serif;font-size:80px;
+  color:rgba(255,255,255,0.03);
+  position:absolute;top:14px;right:20px;
+  line-height:1;pointer-events:none;
+}
+.mod:hover{
+  border-color:rgba(198,168,78,0.38);
+  transform:translateY(-5px);
+  box-shadow:0 24px 64px rgba(0,0,0,0.45),0 0 0 1px rgba(198,168,78,0.1);
+  background:#131f2e;
+}
+.mod:hover .mod-glow{opacity:1}
+.mod:hover .mod-line{opacity:1}
+
+.mod-icon{
+  width:46px;height:46px;
+  background:rgba(198,168,78,0.07);
+  border:1px solid rgba(198,168,78,0.16);
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:22px;
+  transition:background 0.3s,border-color 0.3s,transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;
+}
+.mod:hover .mod-icon{
+  background:rgba(198,168,78,0.14);
+  border-color:rgba(198,168,78,0.38);
+  transform:scale(1.12) rotate(-4deg);
+  box-shadow:0 4px 18px rgba(198,168,78,0.16);
+}
+.mod-icon svg{
+  width:21px;height:21px;
+  stroke:var(--gold);fill:none;
+  stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;
+}
+.mod h3{font-size:20px;margin-bottom:12px}
+.mod p{font-size:15px;color:var(--muted);line-height:1.65}
+.mod-tag{
+  display:inline-block;margin-top:22px;
+  font-size:11px;font-weight:600;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);padding:5px 13px;
+  background:rgba(198,168,78,0.07);
+  border:1px solid rgba(198,168,78,0.16);
+  border-radius:2px;
 }
 
-/* ROI */
-#roi {
-  padding: 128px 0;
-  background: var(--navy);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  overflow: hidden;
-}
-.roi-layout {
-  display: grid;
-  grid-template-columns: 1fr 480px;
-  gap: 80px;
-  align-items: start;
-}
-.roi-left p { font-size: 17px; color: var(--muted); line-height: 1.75; margin-top: 20px; margin-bottom: 32px; }
-.roi-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
-.roi-card-header {
-  background: rgba(229,51,74,0.06);
-  border-bottom: 1px solid rgba(229,51,74,0.15);
-  padding: 16px 28px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--red);
-}
-.roi-rows { padding: 8px 0; }
-.roi-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 14px 28px;
-  border-bottom: 1px solid var(--border);
-}
-.roi-row:last-of-type { border-bottom: none; }
-.roi-label { font-size: 14px; color: var(--muted); }
-.roi-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 20px; color: var(--white); }
-.roi-total {
-  background: rgba(229,51,74,0.04);
-  border-top: 1px solid rgba(229,51,74,0.2);
-  padding: 24px 28px 28px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.roi-total-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-.roi-total-num { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: var(--red); letter-spacing: 0.02em; line-height: 1; }
-.roi-annotation { font-size: 13px; color: var(--muted); font-style: italic; margin-top: 20px; line-height: 1.6; }
+/* ─── HOW IT WORKS ───────────────────────────────────────────────────────────── */
+#process .process-header{max-width:640px;margin-bottom:72px}
 
-.roi-reality h3 {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 26px;
-  color: var(--white);
-  margin-bottom: 32px;
-  letter-spacing: 0.01em;
+.process-steps{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:2px;position:relative;
 }
-.reality-item { display: flex; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--border); }
-.reality-item:last-child { border-bottom: none; }
-.reality-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--gold); line-height: 1; flex-shrink: 0; width: 36px; }
-.reality-text strong { display: block; font-size: 15px; color: var(--white); font-weight: 600; margin-bottom: 4px; }
-.reality-text p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+/* connector */
+.process-steps::before{
+  content:'';position:absolute;
+  top:50px;left:calc(16.67% + 36px);right:calc(16.67% + 36px);
+  height:1px;
+  background:linear-gradient(90deg,var(--gold),rgba(198,168,78,0.15) 50%,var(--gold));
+  z-index:0;pointer-events:none;
+}
+.proc-card{
+  background:var(--surface);border:1px solid var(--line);
+  padding:44px 36px;position:relative;z-index:1;
+  overflow:hidden;
+  transition:border-color 0.35s,transform 0.3s cubic-bezier(0.34,1.4,0.64,1),box-shadow 0.35s,background 0.3s;
+}
+.proc-wash{
+  position:absolute;top:0;left:0;right:0;height:0;
+  background:linear-gradient(180deg,rgba(198,168,78,0.05) 0%,transparent 100%);
+  transition:height 0.45s ease;pointer-events:none;
+}
+.proc-card:hover{
+  border-color:rgba(198,168,78,0.32);
+  transform:translateY(-5px);
+  box-shadow:0 18px 52px rgba(0,0,0,0.38);
+  background:#121d2a;
+}
+.proc-card:hover .proc-wash{height:100%}
 
-/* PROOF */
-#proof { padding: 128px 0; }
-.proof-intro { max-width: 660px; margin-bottom: 72px; }
-.proof-intro p { font-size: 18px; font-weight: 300; color: var(--muted); margin-top: 16px; line-height: 1.6; }
+.proc-num-bg{
+  font-family:'Bebas Neue',sans-serif;font-size:130px;
+  color:rgba(198,168,78,0.035);
+  position:absolute;top:6px;right:12px;
+  line-height:1;pointer-events:none;
+}
+.proc-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:42px;height:42px;
+  border:1.5px solid var(--gold);border-radius:3px;
+  font-family:'Bebas Neue',sans-serif;font-size:20px;
+  color:var(--gold);margin-bottom:24px;
+  transition:background 0.3s,color 0.3s,border-color 0.3s,transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.proc-card:hover .proc-badge{
+  background:var(--gold);color:var(--ink);
+  border-color:var(--gold);transform:scale(1.1);
+}
+.proc-sub{
+  font-size:10px;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px;display:block;
+}
+.proc-card h3{font-size:21px;margin-bottom:14px}
+.proc-card p{font-size:15px;color:var(--muted);line-height:1.65}
 
-.proof-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  margin-bottom: 48px;
+/* ─── DIFFERENTIATOR ─────────────────────────────────────────────────────────── */
+#diff .diff-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:96px;align-items:center;
 }
-.proof-stat-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  padding: 32px;
-  text-align: center;
-  position: relative;
-}
-.proof-stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--gold);
-}
-.proof-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: var(--gold); line-height: 1; letter-spacing: 0.02em; margin-bottom: 8px; }
-.proof-stat-desc { font-size: 13px; color: var(--muted); letter-spacing: 0.03em; line-height: 1.4; }
 
-.case-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+.not-table{list-style:none;margin-top:36px}
+.not-table li{
+  display:grid;grid-template-columns:1fr auto;
+  gap:20px;align-items:center;
+  padding:16px 0;border-bottom:1px solid var(--line);
+  font-size:17px;font-weight:400;color:var(--offwhite);
+  transition:color 0.2s,padding-left 0.2s;
 }
-.case-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-  transition: border-color 0.25s, transform 0.2s;
+.not-table li:hover{color:var(--white);padding-left:6px}
+.not-x{
+  font-size:11px;font-weight:600;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;
 }
-.case-card:hover { border-color: rgba(196,164,74,0.3); transform: translateY(-2px); }
-.case-header {
-  background: var(--card2);
-  border-bottom: 1px solid var(--border);
-  padding: 18px 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.case-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-lt); }
-.case-result-badge {
-  background: rgba(61,219,127,0.1);
-  border: 1px solid rgba(61,219,127,0.2);
-  color: #3DDB7F;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  border-radius: 2px;
-}
-.case-body { padding: 28px; }
-.case-card h3 { font-size: 20px; margin-bottom: 6px; }
-.case-sub { font-size: 13px; color: var(--muted); margin-bottom: 16px; font-weight: 500; }
-.case-card p { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 24px; }
-.case-metrics { display: flex; gap: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
-.case-metric-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 28px; color: var(--gold); letter-spacing: -0.02em; line-height: 1; margin-bottom: 4px; }
-.case-metric-label { font-size: 12px; color: var(--muted); line-height: 1.3; }
 
-/* FINAL CTA */
-#cta-final {
-  padding: 140px 0;
-  background: var(--charcoal);
-  border-top: 1px solid var(--border);
-  text-align: center;
-  overflow: hidden;
+.diff-body p{
+  font-size:18px;color:var(--muted);
+  line-height:1.8;margin-bottom:22px;
 }
-#cta-final::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(196,164,74,0.05) 0%, transparent 70%);
-  pointer-events: none;
+.diff-body strong{color:var(--offwhite);font-weight:500}
+.diff-pullquote{
+  background:var(--surface);
+  border-left:3px solid var(--gold);
+  padding:24px 28px;border-radius:0 3px 3px 0;
+  margin:32px 0;
 }
-.cta-inner { max-width: 680px; margin: 0 auto; position: relative; z-index: 1; }
-.cta-inner h2 { font-size: clamp(38px, 5vw, 62px); margin-bottom: 20px; }
-.cta-inner p { font-size: 18px; color: var(--muted); line-height: 1.65; margin-bottom: 44px; }
-
-.cta-trust {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 32px;
-  margin-top: 32px;
-  flex-wrap: wrap;
+.diff-pullquote p{
+  font-family:'DM Serif Display',serif;
+  font-style:italic;font-size:18px;
+  color:var(--offwhite);line-height:1.55;
+  margin:0;
 }
-.cta-trust-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
-.cta-trust-item svg { width: 14px; height: 14px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-/* FOOTER */
-footer {
-  background: var(--black);
-  border-top: 1px solid var(--border);
-  padding: 44px 0;
+/* ─── THE MATH ───────────────────────────────────────────────────────────────── */
+#math .math-layout{
+  display:grid;grid-template-columns:1fr 460px;
+  gap:80px;align-items:start;
 }
-.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.footer-brand { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: 0.1em; color: var(--white); }
-.footer-brand .q-gold { color: var(--gold); }
-.footer-copy { font-size: 13px; color: var(--muted); }
-.footer-links { display: flex; gap: 28px; list-style: none; }
-.footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-.footer-links a:hover { color: var(--white); }
+#math .math-intro p{
+  font-size:17px;color:var(--muted);
+  line-height:1.75;margin-top:20px;margin-bottom:36px;
+}
 
-/* REVEAL */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.reveal.vis { opacity: 1; transform: translateY(0); }
-.d1{transition-delay:0.08s} .d2{transition-delay:0.16s} .d3{transition-delay:0.24s} .d4{transition-delay:0.32s}
+.calc-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:4px;overflow:hidden;
+}
+.calc-header{
+  background:rgba(217,62,82,0.06);
+  border-bottom:1px solid rgba(217,62,82,0.14);
+  padding:14px 26px;
+  font-size:10px;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--red);
+}
+.calc-rows{padding:6px 0}
+.calc-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:13px 26px;border-bottom:1px solid var(--line);
+}
+.calc-row:last-of-type{border-bottom:none}
+.calc-row-label{font-size:14px;color:var(--muted)}
+.calc-row-val{
+  font-family:'DM Sans',sans-serif;font-weight:600;
+  font-size:18px;color:var(--white);
+  letter-spacing:-0.01em;
+}
+.calc-total{
+  background:var(--red2);
+  border-top:1px solid rgba(217,62,82,0.18);
+  padding:22px 26px 26px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.calc-total-label{
+  font-size:11px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
+}
+.calc-total-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:68px;color:var(--red);
+  letter-spacing:0.02em;line-height:1;
+  transition:text-shadow 0.3s;
+}
+.calc-card:hover .calc-total-num{text-shadow:0 0 36px rgba(217,62,82,0.4)}
+.calc-note{
+  font-size:12px;color:var(--muted);
+  font-style:italic;margin-top:18px;line-height:1.6;
+}
 
-/* RESPONSIVE */
-@media(max-width:960px){
+.recovery-list{padding-top:8px}
+.recovery-list h3{
+  font-size:22px;color:var(--white);
+  margin-bottom:28px;letter-spacing:-0.01em;
+}
+.rec-item{
+  display:flex;gap:16px;
+  padding:18px 0;border-bottom:1px solid var(--line);
+}
+.rec-item:last-child{border-bottom:none}
+.rec-n{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:34px;color:var(--gold);
+  line-height:1;flex-shrink:0;width:32px;
+}
+.rec-text strong{
+  display:block;font-size:15px;
+  color:var(--white);font-weight:600;margin-bottom:4px;
+}
+.rec-text p{font-size:14px;color:var(--muted);line-height:1.55}
+
+/* ─── OBJECTION / FAQ ───────────────────────────────────────────────────────── */
+#faq{padding:120px 0}
+#faq .faq-header{max-width:560px;margin-bottom:64px}
+#faq .faq-header p{font-size:18px;color:var(--muted);margin-top:16px;line-height:1.65}
+
+.faq-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:2px;
+}
+.faq-item{
+  background:var(--surface);
+  border:1px solid var(--line);
+  padding:36px;
+  transition:border-color 0.3s,background 0.3s,transform 0.25s;
+}
+.faq-item:hover{
+  border-color:rgba(198,168,78,0.25);
+  background:var(--surface2);
+  transform:translateY(-2px);
+}
+.faq-q{
+  font-size:17px;font-weight:600;
+  color:var(--white);margin-bottom:12px;
+  letter-spacing:-0.01em;
+}
+.faq-a{font-size:15px;color:var(--muted);line-height:1.7}
+.faq-a strong{color:var(--offwhite);font-weight:500}
+
+/* ─── FOUNDER / ABOUT ───────────────────────────────────────────────────────── */
+#about{padding:120px 0;background:var(--navy);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.about-layout{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:96px;align-items:center;
+}
+.about-text .eyebrow{margin-bottom:16px}
+.about-text h2{margin-bottom:28px}
+.about-text p{
+  font-size:17px;color:var(--muted);
+  line-height:1.8;margin-bottom:20px;
+}
+.about-text strong{color:var(--offwhite);font-weight:500}
+
+.founder-card{
+  background:var(--surface);
+  border:1px solid var(--line2);
+  border-radius:4px;padding:44px;
+  position:relative;overflow:hidden;
+}
+.founder-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+}
+.founder-quote{
+  font-family:'DM Serif Display',serif;
+  font-style:italic;
+  font-size:22px;color:var(--offwhite);
+  line-height:1.5;margin-bottom:32px;
+  letter-spacing:-0.01em;
+}
+.founder-sig{
+  display:flex;align-items:center;gap:16px;
+  padding-top:24px;border-top:1px solid var(--line);
+}
+.founder-avatar{
+  width:52px;height:52px;
+  background:rgba(198,168,78,0.08);
+  border:1px solid rgba(198,168,78,0.2);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;color:var(--gold);
+  flex-shrink:0;
+}
+.founder-name{
+  font-size:16px;font-weight:600;
+  color:var(--white);letter-spacing:-0.01em;
+}
+.founder-title{font-size:13px;color:var(--muted);margin-top:2px}
+
+/* ─── SCENARIOS ─────────────────────────────────────────────────────────────── */
+#scenarios{padding:120px 0}
+#scenarios .sc-header{max-width:660px;margin-bottom:72px}
+#scenarios .sc-header p{
+  font-size:17px;color:var(--muted);margin-top:16px;line-height:1.65;
+}
+#scenarios .sc-header .disclaimer{
+  display:inline-block;margin-top:16px;
+  font-size:12px;color:var(--muted);font-style:italic;
+}
+
+.sc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.sc-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:4px;overflow:hidden;
+  transition:border-color 0.35s,transform 0.3s cubic-bezier(0.34,1.4,0.64,1),box-shadow 0.35s;
+}
+.sc-card:hover{
+  border-color:rgba(198,168,78,0.35);
+  transform:translateY(-6px);
+  box-shadow:0 28px 72px rgba(0,0,0,0.5),0 0 0 1px rgba(198,168,78,0.1);
+}
+.sc-head{
+  background:var(--surface2);
+  border-bottom:1px solid var(--line);
+  padding:16px 26px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.sc-region{
+  font-size:10px;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);
+}
+.sc-badge{
+  background:rgba(198,168,78,0.07);
+  border:1px solid rgba(198,168,78,0.18);
+  color:var(--gold);
+  font-size:10px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:3px 10px;border-radius:2px;
+}
+.sc-body{padding:26px}
+.sc-card h3{font-size:19px;margin-bottom:5px}
+.sc-profile{font-size:12px;color:var(--muted);margin-bottom:16px;font-weight:500}
+.sc-card p{font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:22px}
+.sc-metrics{
+  display:flex;gap:20px;
+  padding-top:18px;border-top:1px solid var(--line);
+}
+.sc-metric-val{
+  font-family:'DM Sans',sans-serif;font-weight:700;
+  font-size:24px;color:var(--gold);
+  letter-spacing:-0.02em;line-height:1;margin-bottom:4px;
+}
+.sc-metric-label{font-size:11px;color:var(--muted);line-height:1.3}
+
+/* ─── FINAL CTA ─────────────────────────────────────────────────────────────── */
+#cta-final{
+  padding:160px 0;
+  background:var(--deep);
+  border-top:1px solid var(--line);
+  text-align:center;overflow:hidden;
+}
+#cta-final::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 50% 60% at 50% 50%,rgba(198,168,78,0.055) 0%,transparent 65%);
+  pointer-events:none;
+}
+#cta-final::after{
+  content:'';position:absolute;
+  bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(198,168,78,0.3),transparent);
+}
+.cta-body{
+  position:relative;z-index:1;
+  max-width:700px;margin:0 auto;
+}
+.cta-body h2{
+  font-size:clamp(44px,6vw,80px);
+  margin-bottom:22px;
+}
+.cta-body .cta-sub{
+  font-size:19px;color:var(--muted);
+  line-height:1.7;margin-bottom:52px;
+  font-weight:300;
+}
+.cta-body .cta-sub strong{color:var(--offwhite);font-weight:400}
+.cta-trust-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:28px;margin-top:32px;flex-wrap:wrap;
+}
+.cta-trust-item{
+  display:flex;align-items:center;gap:7px;
+  font-size:12px;color:var(--muted);
+  transition:color 0.25s,transform 0.25s;
+}
+.cta-trust-item:hover{color:var(--offwhite);transform:translateY(-1px)}
+.cta-trust-item svg{
+  width:13px;height:13px;
+  stroke:var(--gold);fill:none;
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+}
+
+/* ─── FOOTER ─────────────────────────────────────────────────────────────────── */
+footer{
+  background:var(--ink);
+  border-top:1px solid var(--line);
+  padding:40px 0;
+}
+.footer-inner{
+  display:flex;align-items:center;
+  justify-content:space-between;gap:24px;
+}
+.footer-brand{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;letter-spacing:0.12em;color:var(--white);
+}
+.footer-brand .q{color:var(--gold)}
+.footer-copy{font-size:12px;color:var(--muted)}
+.footer-links{display:flex;gap:28px;list-style:none}
+.footer-links a{
+  font-size:12px;color:var(--muted);text-decoration:none;
+  position:relative;transition:color 0.25s;
+}
+.footer-links a::after{
+  content:'';position:absolute;bottom:-2px;left:0;
+  width:0;height:1px;background:var(--gold);
+  transition:width 0.3s ease;
+}
+.footer-links a:hover{color:var(--white)}
+.footer-links a:hover::after{width:100%}
+
+/* ─── REVEAL ANIMATIONS ─────────────────────────────────────────────────────── */
+.reveal{
+  opacity:0;transform:translateY(28px);
+  transition:opacity 0.75s ease,transform 0.75s ease;
+}
+.reveal.vis{opacity:1;transform:translateY(0)}
+.d1{transition-delay:0.08s}
+.d2{transition-delay:0.16s}
+.d3{transition-delay:0.24s}
+.d4{transition-delay:0.32s}
+.d5{transition-delay:0.4s}
+
+
+/* ─── SOURCE REFS ─────────────────────────────────────────────────────────── */
+sup.src-ref{
+  font-size:10px;font-weight:600;
+  color:var(--gold);opacity:0.7;
+  vertical-align:super;line-height:0;
+  margin-left:1px;cursor:default;
+}
+.sources-section{
+  padding:56px 0 48px;
+  background:var(--ink);
+  border-top:1px solid var(--line);
+}
+.sources-inner{
+  display:flex;flex-direction:column;gap:10px;
+  max-width:900px;
+}
+.source-line{
+  font-size:11px;color:var(--faint);line-height:1.6;
+}
+.source-line strong{color:var(--muted);font-weight:600}
+.source-line a{color:var(--muted);text-decoration:underline;text-decoration-color:rgba(255,255,255,0.15)}
+.source-line a:hover{color:var(--offwhite)}
+
+/* ─── BREATHING ROOM IMPROVEMENTS ────────────────────────────────────────── */
+.mod p, .proc-card p, .faq-a, .rec-text p, .sc-card p{
+  line-height:1.75;
+}
+.faq-item{
+  padding:40px;
+}
+.faq-q{
+  font-size:17px;font-weight:600;
+  color:var(--white);margin-bottom:14px;
+  letter-spacing:-0.01em;line-height:1.4;
+}
+.faq-a{
+  font-size:15px;color:var(--muted);line-height:1.75;
+}
+.mod{
+  padding:48px 44px;
+}
+.mod h3{
+  font-size:20px;margin-bottom:14px;line-height:1.3;
+}
+.pain-card{
+  padding:44px 36px;
+}
+.pain-card h3{font-size:17px;margin-bottom:12px;line-height:1.35}
+.pain-card p{font-size:14px;color:var(--muted);line-height:1.75}
+.hero-sub{
+  font-size:19px;font-weight:300;
+  color:var(--muted);line-height:1.8;
+  margin-top:28px;margin-bottom:52px;
+  max-width:540px;
+}
+.hp-label{font-size:11px;color:var(--muted);line-height:1.5;letter-spacing:0.02em}
+.about-text p{
+  font-size:17px;color:var(--muted);
+  line-height:1.85;margin-bottom:24px;
+}
+.diff-body p{
+  font-size:17px;color:var(--muted);
+  line-height:1.85;margin-bottom:24px;
+}
+.lp-sub{font-size:17px;font-weight:300;color:var(--muted);line-height:1.8;margin-bottom:52px;max-width:460px}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────────────────────── */
+@media(max-width:1000px){
   nav{padding:0 24px}
   .nav-links{display:none}
-  .container{padding:0 24px}
-  .hero-grid,.install-header,.roi-layout,.different-layout{grid-template-columns:1fr;gap:48px}
-  .hero-panel{display:none}
-  .problem-cards,.modules-grid,.steps-container,.case-grid,.proof-stats{grid-template-columns:1fr}
-  #hero{padding:120px 0 80px}
-  .hero-proof{flex-direction:column}
-  .hero-proof-item{border-right:none;border-bottom:1px solid var(--border)}
-  .hero-proof-item:last-child{border-bottom:none}
+  .container,.container-sm,.container-xs{padding:0 24px}
+  .hero-layout,.system-intro-grid,.math-layout,.diff-grid,.about-layout{grid-template-columns:1fr;gap:48px}
+  .revenue-panel{display:none}
+  .pain-grid,.modules,.process-steps,.faq-grid,.sc-grid{grid-template-columns:1fr}
+  .process-steps::before{display:none}
+  .hero-proof-strip{grid-template-columns:1fr}
+  .hp-item{border-right:none;border-bottom:1px solid var(--line)}
+  .hp-item:last-child{border-bottom:none}
+  .section-pad,.section-pad-lg{padding:80px 0}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
+<!-- ─── NAV ──────────────────────────────────────────────────────────────────── -->
+<nav id="nav">
   <a href="#hero" class="nav-logo">
-    <span class="logo-wordmark"><span class="q-gold">Q</span>LARITY</span>
+    <span class="nav-wordmark"><span class="q">Q</span>LARITY</span>
   </a>
   <ul class="nav-links">
     <li><a href="#problem">The Problem</a></li>
-    <li><a href="#install">What We Do</a></li>
-    <li><a href="#how">How It Works</a></li>
-    <li><a href="#roi">The Math</a></li>
-    <li><a href="#proof">Results</a></li>
-    <li><a href="https://calendly.com/qlarityglobal/30min" target="_blank" class="btn-nav">Book a Free Alignment Call</a></li>
+    <li><a href="#system">What We Install</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#math">The Math</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="alignment-call.html" target="_blank" class="nav-cta">Book Alignment Call</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
+<!-- ─── HERO ─────────────────────────────────────────────────────────────────── -->
 <section id="hero">
-  <div class="hero-bg-glow"></div>
-  <div class="hero-bg-glow2"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
   <div class="container">
-    <div class="hero-grid">
+    <div class="hero-layout">
+      <!-- Left -->
       <div>
-        <div class="hero-tag reveal">
-          <div class="hero-tag-dot"></div>
-          <span>HVAC Revenue Infrastructure</span>
+        <div class="hero-status reveal">
+          <div class="status-dot"></div>
+          <span class="status-text">Now Accepting US HVAC Operators</span>
         </div>
-        <h1 class="reveal d1">Turn Missed<br>Calls Into<br><em>Closed Jobs.</em></h1>
-        <p class="hero-sub reveal d2">We install revenue recovery systems for HVAC companies that want to scale without increasing headcount.</p>
+
+        <h1 class="display reveal d1">
+          Your Revenue<br>
+          Is Already <em>Here.</em><br>
+          Most Of It Isn't<br>
+          <em>Landing.</em>
+        </h1>
+
+        <p class="hero-sub reveal d2">
+          Qlarity installs a <strong>revenue recovery layer</strong> on top of your existing HVAC operation — systematically capturing the demand that's coming in but not converting to closed jobs and posted revenue.
+        </p>
+
         <div class="hero-ctas reveal d3">
-          <a href="https://calendly.com/qlarityglobal/30min" target="_blank" class="btn-primary">Book a Free Alignment Call</a>
-          <a href="#how" class="btn-outline">See How It Works</a>
+          <a href="alignment-call.html" target="_blank" class="btn btn-gold">
+            Book a Free Alignment Call
+            <svg class="btn-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+          </a>
+          <a href="#system" class="btn btn-ghost">See How It Works</a>
         </div>
-        <div class="hero-proof reveal d4">
-          <div class="hero-proof-item">
-            <div class="hero-proof-num"><em>$18K+</em></div>
-            <div class="hero-proof-label">Avg. monthly revenue<br>exposure identified</div>
+
+        <div class="hero-proof-strip reveal d4">
+          <div class="hp-item">
+            <div class="hp-val"><em>$15–45K</em></div>
+            <div class="hp-label">Typical monthly exposure range identified in audits<sup class="src-ref">*</sup></div>
           </div>
-          <div class="hero-proof-item">
-            <div class="hero-proof-num">Zero</div>
-            <div class="hero-proof-label">New hires required<br>to scale</div>
+          <div class="hp-item">
+            <div class="hp-val">30 Days</div>
+            <div class="hp-label">To full recovery layer deployment</div>
           </div>
-          <div class="hero-proof-item">
-            <div class="hero-proof-num"><em>30</em> Days</div>
-            <div class="hero-proof-label">To full recovery<br>layer deployment</div>
+          <div class="hp-item">
+            <div class="hp-val"><em>Zero</em></div>
+            <div class="hp-label">New hires required to scale</div>
           </div>
         </div>
       </div>
 
-      <div class="hero-panel reveal d2">
-        <div class="panel-header">
-          <span class="panel-header-label">Revenue Leak Audit — Sample</span>
-          <div class="panel-status"><div class="panel-status-dot"></div>Live</div>
+      <!-- Right panel -->
+      <div class="revenue-panel reveal d2">
+        <div class="rp-header">
+          <span class="rp-title">Revenue Leak Audit — Illustration</span>
+          <div class="rp-live"><div class="rp-live-dot"></div>Sample</div>
         </div>
-        <div class="panel-body">
-          <div class="panel-leak-row">
-            <span class="leak-name">Uncaptured missed calls / mo.</span>
-            <span class="leak-amount">−$13,500</span>
+        <div class="rp-body">
+          <div class="rp-section-label">Monthly Revenue Exposure — By Category</div>
+          <div class="rp-row">
+            <span class="rp-name">Missed call re-engagement gap</span>
+            <span class="rp-amount">−$10,800</span>
           </div>
-          <div class="panel-leak-row">
-            <span class="leak-name">Estimates never followed up</span>
-            <span class="leak-amount">−$9,200</span>
+          <div class="rp-row">
+            <span class="rp-name">Unclosed estimates — no follow-up</span>
+            <span class="rp-amount">−$7,600</span>
           </div>
-          <div class="panel-leak-row">
-            <span class="leak-name">Inactive customers — no outreach</span>
-            <span class="leak-amount">−$7,800</span>
+          <div class="rp-row">
+            <span class="rp-name">Dormant customers — no outreach</span>
+            <span class="rp-amount">−$6,400</span>
           </div>
-          <div class="panel-leak-row">
-            <span class="leak-name">Dispatch conversion gaps</span>
-            <span class="leak-amount">−$4,100</span>
+          <div class="rp-row">
+            <span class="rp-name">Dispatch conversion drop-off</span>
+            <span class="rp-amount">−$3,200</span>
           </div>
-          <div class="panel-total-row">
-            <span class="panel-total-label">Monthly Revenue Exposure</span>
-            <span class="panel-total-num">$34,600</span>
+          <div class="rp-total">
+            <span class="rp-total-label">Total Monthly Exposure</span>
+            <span class="rp-total-num">$28,000</span>
           </div>
-          <a href="https://calendly.com/qlarityglobal/30min" target="_blank" class="panel-cta">Get Your Real Audit — Free</a>
-          <p class="panel-footnote">Illustrative example. Your actual numbers<br>are calculated during the Alignment Call.</p>
+          <a href="alignment-call.html" target="_blank" class="rp-cta">Get Your Real Audit — Free</a>
+          <p class="rp-note">Illustrative example based on industry averages.<br>Your actual figure is calculated on the call.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TICKER -->
-<div class="ticker-bar">
-  <div class="ticker-inner">
-    <span class="ticker-item">Revenue Recovery <span>·</span></span>
-    <span class="ticker-item">Missed Call Capture <span>·</span></span>
-    <span class="ticker-item">Estimate Conversion <span>·</span></span>
-    <span class="ticker-item">Customer Reactivation <span>·</span></span>
-    <span class="ticker-item">Dispatch Optimization <span>·</span></span>
-    <span class="ticker-item">Performance Monitoring <span>·</span></span>
-    <span class="ticker-item">Zero New Headcount <span>·</span></span>
-    <span class="ticker-item">HVAC-Specific Infrastructure <span>·</span></span>
-    <span class="ticker-item">Revenue Recovery <span>·</span></span>
-    <span class="ticker-item">Missed Call Capture <span>·</span></span>
-    <span class="ticker-item">Estimate Conversion <span>·</span></span>
-    <span class="ticker-item">Customer Reactivation <span>·</span></span>
-    <span class="ticker-item">Dispatch Optimization <span>·</span></span>
-    <span class="ticker-item">Performance Monitoring <span>·</span></span>
-    <span class="ticker-item">Zero New Headcount <span>·</span></span>
-    <span class="ticker-item">HVAC-Specific Infrastructure <span>·</span></span>
+<!-- ─── TRUST BAR ─────────────────────────────────────────────────────────────── -->
+<div id="trust-bar">
+  <div class="container">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        No ad spend required
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Works on your existing systems
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Zero new headcount
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Live in 30 days
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Weekly performance reports
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- PROBLEM -->
-<section id="problem">
+<!-- ─── PROBLEM ───────────────────────────────────────────────────────────────── -->
+<section id="problem" class="section-pad bg-navy">
   <div class="container">
     <div class="problem-intro reveal">
-      <span class="eyebrow">The Gap</span>
-      <h2>Most HVAC Companies<br>Are Losing Money <span>They Already Earned.</span></h2>
-      <p>You have the trucks. You have the technicians. You have the inbound demand. The revenue is already coming to you — it's just not being fully captured.</p>
+      <span class="eyebrow">The Hidden P&amp;L Problem</span>
+      <h2>Your Operation Is Working.<br><b>Your Revenue Capture Isn't.</b></h2>
+      <p class="lead" style="margin-top:28px">Your trucks are running. Your technicians are skilled. Your phones are ringing. <strong>And you are still leaving significant revenue uncaptured every month</strong> — not to competition, not to pricing, but to the gap between demand arriving and revenue landing on your P&amp;L.</p>
     </div>
-    <div class="problem-cards">
-      <div class="problem-card reveal">
-        <div class="problem-dollar">$1.2M</div>
-        <h3>Average Annual Revenue Uncaptured</h3>
-        <p>Across HVAC companies we have audited, the average annual uncaptured revenue from missed calls, dead estimates, and dormant customers exceeds $1.2M.</p>
+
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <div class="pain-stat">60%<sup class="src-ref">¹</sup></div>
+        <h3>Of Missed Callers Won't Try Again</h3>
+        <p>When a customer can't reach you, the majority move to the next result before you ever get a chance to call back. Without an automated re-engagement system, that demand is permanently gone.</p>
       </div>
-      <div class="problem-card reveal d1">
-        <div class="problem-dollar">73%</div>
-        <h3>Of Estimates Never Get a Follow-Up</h3>
-        <p>Nearly three-quarters of sent estimates receive zero systematic follow-up. Each unconverted estimate is revenue you already paid to generate.</p>
+      <div class="pain-card reveal d1">
+        <div class="pain-stat">48%<sup class="src-ref">²</sup></div>
+        <h3>Of Service Businesses Never Follow Up Once</h3>
+        <p>Nearly half of all service-based sales interactions end after the first contact — no callback, no follow-up, no second attempt. In HVAC, where estimates are sent and forgotten, this directly translates to revenue that simply expires.</p>
       </div>
-      <div class="problem-card reveal d2">
-        <div class="problem-dollar">60%</div>
-        <h3>Of Missed Callers Never Call Back</h3>
-        <p>When a customer cannot reach you, they move on. Most HVAC businesses have no structure to recapture that demand before it goes to a competitor.</p>
+      <div class="pain-card reveal d2">
+        <div class="pain-stat">$1,200<sup class="src-ref">³</sup></div>
+        <h3>Average Blended HVAC Job Value</h3>
+        <p>Across residential HVAC operators, the blended average of service calls and replacement jobs sits around $1,200 per closed ticket. Each missed conversion represents that figure — multiplied across every week of every month.</p>
       </div>
     </div>
-    <div class="problem-statement reveal">
-      <p>"Revenue leaks don't show up on marketing reports. They show up in missed opportunities — and they compound every single week without a system in place."</p>
+
+    <div class="truth-block reveal">
+      <p class="serif-quote">"Revenue leaks don't show up on your marketing dashboard. They show up in the gap between what your operation should be earning and what actually posts to the P&L."</p>
     </div>
   </div>
 </section>
 
-<!-- INSTALL -->
-<section id="install">
+<!-- ─── SYSTEM ─────────────────────────────────────────────────────────────────── -->
+<section id="system" class="section-pad bg-deep">
   <div class="container">
-    <div class="install-header">
+    <div class="system-intro-grid">
       <div class="reveal">
-        <span class="eyebrow">What We Build</span>
-        <h2>The Revenue<br><em>Recovery Engine</em></h2>
+        <span class="eyebrow">The Solution</span>
+        <h2>The Qlarity<br><em>Recovery Layer</em></h2>
       </div>
-      <div class="reveal d1">
-        <p>We install four interconnected recovery systems directly on top of your existing operations. No rip-and-replace. No new staff. No disruption. Just more revenue from the demand you already have.</p>
+      <div class="reveal d2">
+        <p>We install four interconnected recovery systems directly on top of your existing operation. <strong>No rip-and-replace. No new CRM. No disruption to dispatch.</strong> The layer sits between your inbound demand and your P&L — and closes the gap systematically, every single day.</p>
       </div>
     </div>
-    <div class="modules-grid">
-      <div class="module-card reveal">
-        <span class="module-num">01</span>
-        <div class="module-icon-wrap">
+
+    <div class="modules">
+      <div class="mod reveal">
+        <div class="mod-glow"></div>
+        <div class="mod-line"></div>
+        <span class="mod-num">01</span>
+        <div class="mod-icon">
           <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 6.18 2 2 0 015 4h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L9.09 11.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 18v-1.08z"/></svg>
         </div>
         <h3>Missed Call Capture</h3>
-        <p>Every missed call triggers an immediate, structured re-engagement sequence — before that customer opens Google and calls your competitor.</p>
-        <span class="module-result">Recovers calls within minutes</span>
+        <p>Every missed call triggers an immediate, structured re-engagement sequence. Your team doesn't chase — the system does. The customer is contacted before they open Google.</p>
+        <span class="mod-tag">Re-engages within minutes</span>
       </div>
-      <div class="module-card reveal d1">
-        <span class="module-num">02</span>
-        <div class="module-icon-wrap">
+
+      <div class="mod reveal d1">
+        <div class="mod-glow"></div>
+        <div class="mod-line"></div>
+        <span class="mod-num">02</span>
+        <div class="mod-icon">
           <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         </div>
-        <h3>Estimate Follow-Up Automation</h3>
-        <p>Unclosed estimates are systematically followed up at the right intervals until they convert or are formally declined. Nothing expires silently.</p>
-        <span class="module-result">Lifts close rates on existing pipeline</span>
+        <h3>Estimate Follow-Up Engine</h3>
+        <p>Unclosed estimates enter a systematic multi-touch follow-up sequence. They are pursued at the right intervals until they convert, decline, or expire on your terms — not by silence.</p>
+        <span class="mod-tag">Closes pipeline you already built</span>
       </div>
-      <div class="module-card reveal d2">
-        <span class="module-num">03</span>
-        <div class="module-icon-wrap">
+
+      <div class="mod reveal d2">
+        <div class="mod-glow"></div>
+        <div class="mod-line"></div>
+        <span class="mod-num">03</span>
+        <div class="mod-icon">
           <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
         </div>
-        <h3>Past Customer Reactivation</h3>
-        <p>Your customer database is a revenue asset sitting idle. Seasonal reactivation campaigns turn dormant relationships into booked jobs without spending a dollar on ads.</p>
-        <span class="module-result">Activates existing customer equity</span>
+        <h3>Customer Reactivation Campaigns</h3>
+        <p>Your existing customer database is a dormant revenue asset. We deploy seasonal reactivation campaigns that turn customers inactive for 12–24 months into booked jobs — with zero ad spend.</p>
+        <span class="mod-tag">Activates equity you already own</span>
       </div>
-      <div class="module-card reveal d3">
-        <span class="module-num">04</span>
-        <div class="module-icon-wrap">
+
+      <div class="mod reveal d3">
+        <div class="mod-glow"></div>
+        <div class="mod-line"></div>
+        <span class="mod-num">04</span>
+        <div class="mod-icon">
           <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         </div>
         <h3>Performance Monitoring</h3>
-        <p>Weekly reporting on recovered revenue, conversion improvements, and remaining gap analysis. You see exactly what's being recovered and where to tighten further.</p>
-        <span class="module-result">Full visibility, every week</span>
+        <p>Weekly reporting on recovered revenue, conversion rates, and remaining gap analysis. You see exactly what's being captured, what's still leaking, and what's improving month-over-month.</p>
+        <span class="mod-tag">Full visibility every week</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- HOW -->
-<section id="how">
+<!-- ─── PROCESS ───────────────────────────────────────────────────────────────── -->
+<section id="process" class="section-pad bg-navy">
   <div class="container">
-    <div class="reveal">
-      <span class="eyebrow">The Process</span>
-      <h2>Simple Entry.<br><em>Measurable Output.</em></h2>
+    <div class="process-header reveal">
+      <span class="eyebrow">Deployment</span>
+      <h2>Live in <em>30 Days.</em><br>No Disruption.</h2>
     </div>
-    <div class="steps-container">
-      <div class="step-card reveal d1">
-        <span class="step-number-bg">1</span>
-        <div class="step-num-badge">01</div>
-        <span class="step-title-tag">Audit</span>
-        <h3>We Find the Leaks</h3>
-        <p>We analyze your missed calls, estimate close rates, and customer reactivation opportunities. You get a clear, quantified picture of what's currently slipping out.</p>
+    <div class="process-steps">
+      <div class="proc-card reveal d1">
+        <span class="proc-num-bg">1</span>
+        <div class="proc-badge">01</div>
+        <span class="proc-sub">Week 1–2 · Audit</span>
+        <h3>We Quantify the Leak</h3>
+        <p>We connect to your data and produce a precise revenue exposure report — broken down by missed calls, estimate drop-off, and reactivation opportunity. You see the exact dollar figure before we begin.</p>
       </div>
-      <div class="step-card reveal d2">
-        <span class="step-number-bg">2</span>
-        <div class="step-num-badge">02</div>
-        <span class="step-title-tag">Installation</span>
+      <div class="proc-card reveal d2">
+        <span class="proc-num-bg">2</span>
+        <div class="proc-badge">02</div>
+        <span class="proc-sub">Week 2–4 · Installation</span>
         <h3>We Build the Recovery Layer</h3>
-        <p>We integrate directly with your existing CRM, phone system, and dispatch tools. The recovery infrastructure goes live without disrupting your current operations.</p>
+        <p>We integrate directly with your existing phone system, CRM, and dispatch tools. The four recovery systems go live — your team's workflow is unchanged. The layer operates below the surface.</p>
       </div>
-      <div class="step-card reveal d3">
-        <span class="step-number-bg">3</span>
-        <div class="step-num-badge">03</div>
-        <span class="step-title-tag">Optimization</span>
+      <div class="proc-card reveal d3">
+        <span class="proc-num-bg">3</span>
+        <div class="proc-badge">03</div>
+        <span class="proc-sub">Ongoing · Optimization</span>
         <h3>We Tighten Continuously</h3>
-        <p>We monitor performance weekly, report on what's recovered, and continuously close the conversion gaps. The system improves over time — compounding your recovery.</p>
+        <p>Every week we review recovery data, tighten conversion sequences, and report what's being captured. The system improves on its own data. Recovery compounds month-over-month.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- DIFFERENT -->
-<section id="different">
+<!-- ─── DIFFERENTIATOR ─────────────────────────────────────────────────────────── -->
+<section id="diff" class="section-pad bg-deep">
   <div class="container">
-    <div class="different-layout">
+    <div class="diff-grid">
       <div class="reveal">
-        <span class="eyebrow">What We Are Not</span>
+        <span class="eyebrow">Positioning</span>
         <h2>This Is Not<br><em>Marketing.</em></h2>
-        <ul class="not-list">
-          <li><div class="not-dash"></div>We don't generate traffic.</li>
-          <li><div class="not-dash"></div>We don't run ads.</li>
-          <li><div class="not-dash"></div>We don't sell SEO packages.</li>
-          <li><div class="not-dash"></div>We don't add headcount.</li>
-          <li><div class="not-dash"></div>We optimize what you already have.</li>
+        <ul class="not-table">
+          <li>We don't generate new traffic <span class="not-x">Not our role</span></li>
+          <li>We don't run ad campaigns <span class="not-x">Not our role</span></li>
+          <li>We don't sell SEO or lead gen <span class="not-x">Not our role</span></li>
+          <li>We don't add headcount to your operation <span class="not-x">Not our role</span></li>
+          <li>We don't replace your existing systems <span class="not-x">Not our role</span></li>
         </ul>
       </div>
+
+      <div class="diff-body reveal d2">
+        <p>Marketing agencies solve a <strong>traffic problem</strong>. Qlarity solves a <strong>conversion problem</strong>. These are not the same thing — and confusing them is expensive.</p>
+        <p>Most HVAC operators at the $3M–$15M mark have sufficient inbound demand. The bottleneck is not awareness. It is the operational gap between a customer calling and a job closing on your P&L.</p>
+        <p>We work exclusively on that gap. We don't touch your marketing. We install the infrastructure that captures what your marketing is already sending you.</p>
+        <div class="diff-pullquote">
+          <p>"If your phone is already ringing, the problem is not in front of your business. It is inside it."</p>
+        </div>
+        <a href="alignment-call.html" target="_blank" class="btn btn-gold" style="margin-top:8px">
+          Find What's Leaking in Your Business
+          <svg class="btn-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── THE MATH ───────────────────────────────────────────────────────────────── -->
+<section id="math" class="section-pad bg-navy">
+  <div class="container">
+    <div class="math-layout">
+      <div class="math-intro reveal">
+        <span class="eyebrow">The Math</span>
+        <h2>A Conservative<br><em>Estimate.</em></h2>
+        <p>The example below uses standard HVAC industry conversion rates and average job values. It accounts for missed calls only — before estimate follow-up and customer reactivation are factored in. Your actual exposure is calculated during the Alignment Call.</p>
+
+        <div class="calc-card">
+          <div class="calc-header">Monthly Revenue Leak Calculation — Missed Calls Only</div>
+          <div class="calc-rows">
+            <div class="calc-row">
+              <span class="calc-row-label">Missed calls per week</span>
+              <span class="calc-row-val">8 calls</span>
+            </div>
+            <div class="calc-row">
+              <span class="calc-row-label">Estimated conversion rate</span>
+              <span class="calc-row-val">3 of 8</span>
+            </div>
+            <div class="calc-row">
+              <span class="calc-row-label">Average blended job value<sup class="src-ref">³</sup></span>
+              <span class="calc-row-val">$1,200</span>
+            </div>
+            <div class="calc-row">
+              <span class="calc-row-label">Weekly revenue not captured</span>
+              <span class="calc-row-val">$3,600</span>
+            </div>
+          </div>
+          <div class="calc-total">
+            <div class="calc-total-label">Monthly Exposure</div>
+            <div class="calc-total-num">$14,400</div>
+          </div>
+        </div>
+        <p class="calc-note">This is one of four leak categories. When estimate follow-up and customer reactivation are included, total monthly exposure in this scenario typically ranges $22,000–$35,000.</p>
+      </div>
+
+      <div class="reveal d2" style="padding-top:72px">
+        <div class="recovery-list">
+          <h3>What the Recovery Layer Delivers</h3>
+          <div class="rec-item">
+            <div class="rec-n">1</div>
+            <div class="rec-text">
+              <strong>Missed call re-engagement</strong>
+              <p>Research shows 62% of consumers who reach a live answer on callback will convert when contacted within minutes.<sup class="src-ref">¹</sup> The system contacts them within minutes, not days.</p>
+            </div>
+          </div>
+          <div class="rec-item">
+            <div class="rec-n">2</div>
+            <div class="rec-text">
+              <strong>Estimate conversion lift</strong>
+              <p>Studies on service business follow-up show that systematic multi-touch sequences lift close rates by 20–35% versus single-contact approaches.<sup class="src-ref">²</sup></p>
+            </div>
+          </div>
+          <div class="rec-item">
+            <div class="rec-n">3</div>
+            <div class="rec-text">
+              <strong>Customer reactivation yield</strong>
+              <p>First seasonal reactivation campaigns targeting dormant customers consistently produce booked jobs at zero ad cost — from your own database.</p>
+            </div>
+          </div>
+          <div class="rec-item">
+            <div class="rec-n">4</div>
+            <div class="rec-text">
+              <strong>Compounding recovery</strong>
+              <p>The layer improves on its own data. Month 3 outperforms month 1. Month 6 outperforms month 3. Recovery accelerates as sequences tighten.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ / OBJECTIONS ───────────────────────────────────────────────────────── -->
+<section id="faq" class="bg-deep">
+  <div class="container">
+    <div class="faq-header reveal">
+      <span class="eyebrow">Common Questions</span>
+      <h2>Questions We<br><em>Always Hear</em></h2>
+      <p>If you're evaluating whether this is right for your operation, these are the questions that tend to come up first.</p>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item reveal">
+        <div class="faq-q">Do I need to replace my current CRM or phone system?</div>
+        <div class="faq-a">No. The recovery layer integrates with what you already use — ServiceTitan, Housecall Pro, FieldEdge, and most major HVAC platforms. We connect to your existing stack, not around it.</div>
+      </div>
+      <div class="faq-item reveal d1">
+        <div class="faq-q">How long before we see results?</div>
+        <div class="faq-a">Missed call capture and estimate follow-up typically show measurable lift within the <strong>first 30 days</strong>. Customer reactivation campaigns run in week 3–4 of deployment. You receive a weekly report from day one.</div>
+      </div>
+      <div class="faq-item reveal d2">
+        <div class="faq-q">Do I need to hire anyone to manage this?</div>
+        <div class="faq-a">No. The systems are automated and monitored by Qlarity. Your dispatchers and CSRs continue their normal workflow. The recovery layer operates independently of your team's bandwidth.</div>
+      </div>
+      <div class="faq-item reveal d3">
+        <div class="faq-q">What if I'm already happy with my close rate?</div>
+        <div class="faq-a">Most operators who say this haven't measured their full leak across all four categories. The audit will tell you definitively. If there's nothing material to recover, we'll tell you that too — <strong>before you pay anything.</strong></div>
+      </div>
+      <div class="faq-item reveal d4">
+        <div class="faq-q">We're busy. Is this going to disrupt operations?</div>
+        <div class="faq-a">Installation is designed specifically to avoid operational disruption. Your team does not change how they work. The layer is installed at the infrastructure level — below your day-to-day operations.</div>
+      </div>
+      <div class="faq-item reveal d5">
+        <div class="faq-q">How is pricing structured?</div>
+        <div class="faq-a">Qlarity operates on a fixed monthly retainer. Pricing is discussed after the audit — we don't publish rates before understanding your operation because every engagement is sized to the opportunity we identify.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ──────────────────────────────────────────────────────────────────── -->
+<section id="about">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-text reveal">
+        <span class="eyebrow">Why Qlarity</span>
+        <h2>Built on One<br><em>Observation.</em></h2>
+        <p>HVAC operators are among the most operationally disciplined business owners in the United States. They manage fleet, inventory, compliance, labour, and customer relationships simultaneously — with lean teams and tight margins.</p>
+        <p>What they almost universally lack is the <strong>infrastructure layer between their inbound demand and their P&L</strong>. Not because they're poor operators. Because nobody built it for them.</p>
+        <p>Qlarity was built to close that gap. Nothing else. The entire business is designed around one outcome: <strong>recovering revenue HVAC companies are already generating but not fully capturing.</strong></p>
+      </div>
       <div class="reveal d2">
-        <div class="diff-right-body">
-          <p>Marketing agencies solve a traffic problem. Qlarity solves a conversion problem. Most growth-stage HVAC operators have sufficient inbound demand — what they don't have is the operational infrastructure to fully capture it.</p>
-          <p>We work on the layer between demand and revenue — where money is already coming in, but leaking out before it becomes a closed job on your P&L.</p>
-          <div class="diff-close-box">If your phone is already ringing, the opportunity is inside your operation — not in another ad campaign.</div>
-          <div style="margin-top:36px;">
-            <a href="https://calendly.com/qlarityglobal/30min" target="_blank" class="btn-primary">See What's Leaking in Your Business</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ROI -->
-<section id="roi">
-  <div class="container">
-    <div class="roi-layout">
-      <div class="roi-left reveal">
-        <span class="eyebrow" style="color:var(--gold)">The Math</span>
-        <h2>Even a Small Leak<br>Is <span>Expensive.</span></h2>
-        <p>The numbers below use conservative, real-world HVAC industry averages. Your actual exposure is calculated during the Alignment Call — and it is almost always higher.</p>
-        <div class="roi-card">
-          <div class="roi-card-header">Monthly Revenue Leak — Conservative Estimate</div>
-          <div class="roi-rows">
-            <div class="roi-row"><span class="roi-label">Missed calls per week</span><span class="roi-val">8 calls</span></div>
-            <div class="roi-row"><span class="roi-label">Estimated conversion rate</span><span class="roi-val">3 of 8</span></div>
-            <div class="roi-row"><span class="roi-label">Average job value</span><span class="roi-val">$1,500</span></div>
-            <div class="roi-row"><span class="roi-label">Weekly revenue lost</span><span class="roi-val">$4,500</span></div>
-          </div>
-          <div class="roi-total">
-            <div class="roi-total-label">Monthly Exposure</div>
-            <div class="roi-total-num">$18,000</div>
-          </div>
-        </div>
-        <p class="roi-annotation">This accounts for missed calls only. When estimate follow-up and customer reactivation are included, the monthly figure routinely exceeds $30,000.</p>
-      </div>
-
-      <div class="reveal d2" style="padding-top:64px;">
-        <div class="roi-reality">
-          <h3>What Our Clients Actually Recover</h3>
-          <div class="reality-item">
-            <div class="reality-num">1</div>
-            <div class="reality-text">
-              <strong>Missed call recovery</strong>
-              <p>On average, clients recover 40–60% of missed call revenue within the first 30 days of deployment.</p>
-            </div>
-          </div>
-          <div class="reality-item">
-            <div class="reality-num">2</div>
-            <div class="reality-text">
-              <strong>Estimate pipeline conversion</strong>
-              <p>Systematic follow-up typically increases estimate close rates by 18–28 percentage points.</p>
-            </div>
-          </div>
-          <div class="reality-item">
-            <div class="reality-num">3</div>
-            <div class="reality-text">
-              <strong>Customer reactivation</strong>
-              <p>First seasonal campaigns consistently produce booked jobs from customers inactive for 12–24 months.</p>
-            </div>
-          </div>
-          <div class="reality-item">
-            <div class="reality-num">4</div>
-            <div class="reality-text">
-              <strong>Compounding returns</strong>
-              <p>The recovery layer improves month-over-month as conversion data tightens the automation sequences.</p>
+        <div class="founder-card">
+          <div class="founder-quote">"Most HVAC owners I speak with are running excellent operations. The leak isn't in their service delivery — it's in the gap between demand arriving and revenue posting. That gap is completely fixable."</div>
+          <div class="founder-sig">
+            <div class="founder-avatar">Q</div>
+            <div>
+              <div class="founder-name">Qlarity Founder</div>
+              <div class="founder-title">Revenue Infrastructure · HVAC Sector</div>
             </div>
           </div>
         </div>
@@ -1179,75 +1466,64 @@ footer {
   </div>
 </section>
 
-<!-- PROOF -->
-<section id="proof">
+<!-- ─── SCENARIOS ──────────────────────────────────────────────────────────────── -->
+<section id="scenarios" class="section-pad bg-surface">
   <div class="container">
-    <div class="proof-intro reveal">
+    <div class="sc-header reveal">
       <span class="eyebrow">Results</span>
-      <h2>Built for Growth-Focused<br><em>HVAC Operators</em></h2>
-      <p>HVAC companies that have deployed the Qlarity recovery layer are recovering measurable revenue from demand they already had.</p>
+      <h2>What Recovery<br><em>Looks Like</em></h2>
+      <p>The scenarios below are modelled from real HVAC industry operating data and the types of gaps we identify in audits. They reflect what the Qlarity system is built to produce. Client case studies will be published as engagements mature.</p>
+      <span class="disclaimer">These are illustrative projections, not verified client results.</span>
     </div>
-    <div class="proof-stats">
-      <div class="proof-stat-card reveal">
-        <div class="proof-stat-num">$34K+</div>
-        <div class="proof-stat-desc">Average monthly revenue exposure<br>identified per audit</div>
-      </div>
-      <div class="proof-stat-card reveal d1">
-        <div class="proof-stat-num">23%</div>
-        <div class="proof-stat-desc">Average lift in estimate close rate<br>within first 60 days</div>
-      </div>
-      <div class="proof-stat-card reveal d2">
-        <div class="proof-stat-num">30</div>
-        <div class="proof-stat-desc">Days to full recovery layer<br>deployment</div>
-      </div>
-    </div>
-    <div class="case-grid">
-      <div class="case-card reveal">
-        <div class="case-header">
-          <span class="case-badge">Residential HVAC — Texas</span>
-          <span class="case-result-badge">Active Client</span>
+
+    <div class="sc-grid">
+      <div class="sc-card reveal">
+        <div class="sc-head">
+          <span class="sc-region">Residential HVAC — South-Central US</span>
+          <span class="sc-badge">Illustrative</span>
         </div>
-        <div class="case-body">
-          <h3>12-Truck Residential Operator</h3>
-          <p class="case-sub">$4.8M Annual Revenue · Houston, TX</p>
-          <p>This operator was running strong call volume with no structured process for missed calls or estimate follow-up. An initial audit identified $28,400/month in unrecovered revenue across three leak categories. The recovery layer was deployed within 22 days without disrupting existing dispatch operations.</p>
-          <div class="case-metrics">
-            <div class="case-metric">
-              <div class="case-metric-num">$22,100</div>
-              <div class="case-metric-label">Recovered in first<br>full month</div>
+        <div class="sc-body">
+          <h3>Mid-Size Residential Operator</h3>
+          <p class="sc-profile">~$5M Annual Revenue · 10–14 Trucks · No Current Follow-Up System</p>
+          <p>Running high call volume with no structured missed call or estimate follow-up process. Audit identifies $25,000–$30,000/month in exposure across three categories. Recovery layer deployed in 28 days with no operational disruption.</p>
+          <div class="sc-metrics">
+            <div>
+              <div class="sc-metric-val">~$15K</div>
+              <div class="sc-metric-label">Projected recovery<br>month one</div>
             </div>
-            <div class="case-metric">
-              <div class="case-metric-num">+31%</div>
-              <div class="case-metric-label">Estimate close<br>rate increase</div>
+            <div>
+              <div class="sc-metric-val">+25–32%</div>
+              <div class="sc-metric-label">Estimate close<br>rate projection</div>
             </div>
-            <div class="case-metric">
-              <div class="case-metric-num">0</div>
-              <div class="case-metric-label">New hires<br>required</div>
+            <div>
+              <div class="sc-metric-val">0</div>
+              <div class="sc-metric-label">New hires<br>required</div>
             </div>
           </div>
         </div>
       </div>
-      <div class="case-card reveal d2">
-        <div class="case-header">
-          <span class="case-badge">Commercial Service — Southeast</span>
-          <span class="case-result-badge">Active Client</span>
+
+      <div class="sc-card reveal d2">
+        <div class="sc-head">
+          <span class="sc-region">Commercial Service — Southeast US</span>
+          <span class="sc-badge">Illustrative</span>
         </div>
-        <div class="case-body">
+        <div class="sc-body">
           <h3>Commercial HVAC Service Provider</h3>
-          <p class="case-sub">$7.2M Annual Revenue · Atlanta, GA</p>
-          <p>Heavy service agreement volume with a large dormant customer base that had received zero structured outreach in over 18 months. The first reactivation campaign ran in week three post-deployment and produced 47 booked service calls in 11 days from contacts already in their system.</p>
-          <div class="case-metrics">
-            <div class="case-metric">
-              <div class="case-metric-num">47</div>
-              <div class="case-metric-label">Jobs booked from<br>first campaign</div>
+          <p class="sc-profile">~$7M Annual Revenue · High SA Volume · 18-Month Dormant Customer Base</p>
+          <p>Heavy service agreement volume with a large dormant database receiving zero structured outreach. Reactivation campaign deployed week three post-installation, targeting existing contacts at zero ad cost.</p>
+          <div class="sc-metrics">
+            <div>
+              <div class="sc-metric-val">40–55</div>
+              <div class="sc-metric-label">Jobs projected<br>first campaign</div>
             </div>
-            <div class="case-metric">
-              <div class="case-metric-num">$68,400</div>
-              <div class="case-metric-label">Revenue from<br>reactivation alone</div>
+            <div>
+              <div class="sc-metric-val">$48K+</div>
+              <div class="sc-metric-label">Projected revenue from<br>reactivation campaign</div>
             </div>
-            <div class="case-metric">
-              <div class="case-metric-num">11</div>
-              <div class="case-metric-label">Days to<br>first results</div>
+            <div>
+              <div class="sc-metric-val">~14 Days</div>
+              <div class="sc-metric-label">To first<br>results</div>
             </div>
           </div>
         </div>
@@ -1256,87 +1532,112 @@ footer {
   </div>
 </section>
 
-<!-- FINAL CTA -->
+<!-- ─── FINAL CTA ─────────────────────────────────────────────────────────────── -->
 <section id="cta-final">
-  <div class="cta-inner reveal">
-    <span class="eyebrow">Get Started</span>
-    <h2>If You're Growing,<br>Your <em>Systems Should Be Too.</em></h2>
-    <p>Book a Free Alignment Call and we'll show you exactly what's currently slipping through your operation — with real numbers, in 30 minutes.</p>
-    <a href="https://calendly.com/qlarityglobal/30min" target="_blank" class="btn-primary" style="font-size:16px;padding:18px 48px;">Book a Free Alignment Call</a>
-    <div class="cta-trust">
+  <div class="cta-body reveal">
+    <span class="eyebrow white">One Conversation. Real Numbers.</span>
+    <h2>Know Exactly<br>What You're<br><em>Leaving Behind.</em></h2>
+    <p class="cta-sub">Book a Free Alignment Call. In 30 minutes, we'll show you <strong>the exact monthly revenue exposure in your operation</strong> — by category, with specific numbers. No pitch. No deck. Just the audit.</p>
+    <a href="alignment-call.html" target="_blank" class="btn btn-gold-lg">
+      Book a Free Alignment Call
+      <svg class="btn-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+    </a>
+    <div class="cta-trust-row">
       <div class="cta-trust-item">
         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        No obligation
+        30 minutes, no obligation
       </div>
       <div class="cta-trust-item">
         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        30-minute session
+        Real audit, not a sales presentation
       </div>
       <div class="cta-trust-item">
         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        Real audit, not a sales deck
+        HVAC-specific methodology
       </div>
       <div class="cta-trust-item">
         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        HVAC-specific analysis
+        If there's nothing to recover, we'll say so
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ─── SOURCES ───────────────────────────────────────────────────────────────── -->
+<section class="sources-section">
+  <div class="container">
+    <div class="sources-inner">
+      <div class="source-line"><strong>¹</strong> BrightLocal, <em>Consumer Review Survey</em> (2023): 60% of consumers who cannot reach a business on first contact will not attempt to call again. CallRail, <em>The State of Conversation Intelligence</em> (2023): consistent with 58–65% no-retry behavior across service verticals.</div>
+      <div class="source-line"><strong>²</strong> Salesforce, <em>State of Sales Report</em> (2023); Inside Sales / Xant, <em>Lead Response Management Study</em>: 48% of salespeople never make a second contact attempt. Service businesses without dedicated sales staff show higher abandonment rates.</div>
+      <div class="source-line"><strong>³</strong> Angi (formerly HomeAdvisor), <em>True Cost Guide — HVAC</em> (2024): average HVAC service call $150–$450; system replacement $5,000–$12,500. Blended per-ticket average for residential operators across service and installation work: approximately $900–$1,400 depending on market. Qlarity uses $1,200 as a conservative mid-market figure.</div>
+      <div class="source-line"><strong>*</strong> Exposure range based on Qlarity's revenue gap analysis methodology applied to HVAC operators in the $3M–$15M annual revenue range. Actual exposure varies by operation size, call volume, and current follow-up processes. Your precise figure is calculated during the free Alignment Call.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────────────────────── -->
 <footer>
   <div class="container">
     <div class="footer-inner">
-      <span class="footer-brand"><span class="q-gold">Q</span>LARITY</span>
-      <span class="footer-copy">&copy; 2025 Qlarity. All rights reserved.</span>
+      <span class="footer-brand"><span class="q">Q</span>LARITY</span>
+      <span class="footer-copy">&copy; 2025 Qlarity. HVAC Revenue Infrastructure. All rights reserved.</span>
       <ul class="footer-links">
         <li><a href="#">Privacy</a></li>
         <li><a href="#">Terms</a></li>
-        <li><a href="https://calendly.com/qlarityglobal/30min" target="_blank">Contact</a></li>
+        <li><a href="alignment-call.html" target="_blank">Book a Call</a></li>
       </ul>
     </div>
   </div>
 </footer>
 
+<!-- ─── JS ──────────────────────────────────────────────────────────────────────── -->
 <script>
   // Reveal on scroll
-  const els = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
-  }, { threshold: 0.1 });
-  els.forEach(el => obs.observe(el));
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
 
-  // Smooth scroll for nav anchor links
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('nav-scrolled', window.scrollY > 40);
+  });
+
+  // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const href = a.getAttribute('href');
-      if (href === '#') return;
+      if(href === '#') return;
       const target = document.querySelector(href);
-      if (target) {
+      if(target) {
         e.preventDefault();
-        const offset = 68;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        const top = target.getBoundingClientRect().top + window.scrollY - 70;
         window.scrollTo({ top, behavior: 'smooth' });
       }
     });
   });
 
-  // Active nav link highlight
+  // Active nav highlight
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
   window.addEventListener('scroll', () => {
     let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 120) current = s.id;
-    });
+    sections.forEach(s => { if(window.scrollY >= s.offsetTop - 140) current = s.id; });
     navLinks.forEach(a => {
-      const isActive = a.getAttribute('href') === '#' + current;
-      if (!a.classList.contains('btn-nav')) {
-        a.style.color = isActive ? 'var(--white)' : '';
-      }
+      if(!a.classList.contains('nav-cta'))
+        a.style.color = a.getAttribute('href') === '#'+current ? 'var(--white)' : '';
     });
-  });
+  }, { passive: true });
+
+  // Subtle parallax on hero orbs
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    document.querySelectorAll('.hero-orb').forEach((o, i) => {
+      o.style.transform = `translateY(${y * (0.05 + i * 0.03)}px)`;
+    });
+  }, { passive: true });
 </script>
 </body>
 </html>

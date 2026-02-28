@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Book Your Free Alignment Call — Qlarity</title>
+<meta name="description" content="Book a free 30-minute Alignment Call. We'll show you the exact monthly revenue exposure in your HVAC operation — by category, with real numbers."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:    #05070A;
+  --navy:   #0B1420;
+  --surface:#0F1B27;
+  --surface2:#132030;
+  --line:   rgba(255,255,255,0.06);
+  --line2:  rgba(255,255,255,0.11);
+  --white:  #F0F3F7;
+  --offwhite:#C9D2DF;
+  --muted:  #637485;
+  --faint:  #3A4755;
+  --gold:   #C6A84E;
+  --gold2:  #DCC070;
+  --gold3:  rgba(198,168,78,0.1);
+  --green:  #2ECC8A;
+  --red:    #D93E52;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{
+  background:var(--ink);
+  color:var(--white);
+  font-family:'DM Sans',sans-serif;
+  font-weight:400;
+  line-height:1.65;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(198,168,78,0.016) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(198,168,78,0.016) 1px,transparent 1px);
+  background-size:72px 72px;
+  pointer-events:none;z-index:0;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  padding:0 52px;height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(5,7,10,0.95);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+}
+.nav-logo{text-decoration:none}
+.nav-wordmark{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:26px;letter-spacing:0.14em;color:var(--white);
+}
+.nav-wordmark .q{color:var(--gold)}
+.nav-back{
+  display:flex;align-items:center;gap:8px;
+  text-decoration:none;font-size:13px;
+  color:var(--muted);font-weight:500;
+  transition:color 0.2s;
+}
+.nav-back:hover{color:var(--white)}
+.nav-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* LAYOUT */
+.page{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height:100vh;
+  padding-top:68px;
+  position:relative;z-index:1;
+}
+
+/* LEFT PANEL */
+.left-panel{
+  padding:80px 64px 80px 72px;
+  background:var(--navy);
+  border-right:1px solid var(--line);
+  display:flex;flex-direction:column;
+  justify-content:center;
+  position:sticky;top:68px;
+  height:calc(100vh - 68px);
+  overflow-y:auto;
+}
+.left-panel::-webkit-scrollbar{width:0}
+
+.lp-eyebrow{
+  display:inline-block;
+  font-size:10px;font-weight:600;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;
+}
+.lp-heading{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(44px,5vw,68px);
+  line-height:0.95;letter-spacing:0.015em;
+  color:var(--white);margin-bottom:24px;
+}
+.lp-heading em{color:var(--gold);font-style:normal}
+.lp-sub{
+  font-size:17px;font-weight:300;
+  color:var(--muted);line-height:1.75;
+  margin-bottom:48px;max-width:460px;
+}
+.lp-sub strong{color:var(--offwhite);font-weight:500}
+
+/* What happens on the call */
+.call-steps{list-style:none;margin-bottom:48px}
+.call-step{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:18px 0;border-bottom:1px solid var(--line);
+}
+.call-step:first-child{border-top:1px solid var(--line)}
+.cs-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px;color:var(--gold);
+  line-height:1;flex-shrink:0;width:28px;
+  margin-top:2px;
+}
+.cs-content strong{
+  display:block;font-size:15px;font-weight:600;
+  color:var(--white);margin-bottom:4px;
+}
+.cs-content p{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* Trust pills */
+.trust-pills{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin-top:40px;
+}
+.trust-pill{
+  display:flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--line2);
+  padding:8px 14px;border-radius:40px;
+  font-size:12px;font-weight:500;color:var(--offwhite);
+}
+.trust-pill svg{
+  width:12px;height:12px;
+  stroke:var(--gold);fill:none;
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  flex-shrink:0;
+}
+
+/* RIGHT PANEL — Calendly */
+.right-panel{
+  background:var(--ink);
+  padding:60px 52px;
+  display:flex;flex-direction:column;
+  position:relative;z-index:1;
+}
+.rp-label{
+  font-size:10px;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:28px;
+  display:flex;align-items:center;gap:10px;
+}
+.rp-label::after{
+  content:'';flex:1;height:1px;
+  background:var(--line2);
+}
+
+.calendly-wrapper{
+  flex:1;min-height:620px;
+  background:var(--surface);
+  border:1px solid var(--line2);
+  border-radius:6px;
+  overflow:hidden;
+}
+
+/* Fallback button if Calendly doesn't load */
+.cal-fallback{
+  display:none;
+  flex-direction:column;align-items:center;
+  justify-content:center;
+  height:100%;gap:20px;text-align:center;
+  padding:40px;
+}
+.cal-fallback p{font-size:16px;color:var(--muted);line-height:1.6}
+.cal-fallback a{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--gold);color:var(--ink);
+  padding:16px 36px;border-radius:2px;
+  font-family:'DM Sans',sans-serif;font-weight:700;
+  font-size:14px;letter-spacing:0.04em;text-transform:uppercase;
+  text-decoration:none;
+  transition:background 0.3s;
+}
+.cal-fallback a:hover{background:var(--gold2)}
+
+/* Bottom note */
+.rp-bottom-note{
+  margin-top:20px;
+  font-size:12px;color:var(--faint);
+  line-height:1.6;text-align:center;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:0 24px}
+  .page{grid-template-columns:1fr}
+  .left-panel{
+    position:relative;height:auto;
+    padding:60px 24px;
+    border-right:none;border-bottom:1px solid var(--line);
+  }
+  .right-panel{padding:40px 24px}
+  .calendly-wrapper{min-height:700px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-wordmark"><span class="q">Q</span>LARITY</span>
+  </a>
+  <a href="index.html" class="nav-back">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to site
+  </a>
+</nav>
+
+<div class="page">
+
+  <!-- LEFT: What to expect -->
+  <div class="left-panel">
+    <span class="lp-eyebrow">Free · 30 Minutes · No Obligation</span>
+    <h1 class="lp-heading">Your Free<br><em>Alignment</em><br>Call.</h1>
+    <p class="lp-sub">
+      This is not a sales call. It is a <strong>working session</strong> — we walk through your operation, identify the revenue categories leaking from your business, and give you the exact monthly exposure figure before we ever discuss working together.
+    </p>
+
+    <ul class="call-steps">
+      <li class="call-step">
+        <span class="cs-num">1</span>
+        <div class="cs-content">
+          <strong>We map your operation (5 min)</strong>
+          <p>A short set of questions about your business — call volume, truck count, current tools, and how you handle estimates and follow-up today.</p>
+        </div>
+      </li>
+      <li class="call-step">
+        <span class="cs-num">2</span>
+        <div class="cs-content">
+          <strong>We calculate the leak (15 min)</strong>
+          <p>Using your actual numbers, we work through all four revenue gap categories and produce a real monthly exposure figure specific to your operation.</p>
+        </div>
+      </li>
+      <li class="call-step">
+        <span class="cs-num">3</span>
+        <div class="cs-content">
+          <strong>You decide what happens next (10 min)</strong>
+          <p>If the numbers make sense, we explain how the recovery layer works and whether your operation is a fit. If not, you leave with a clear picture of your P&L gap — at no cost.</p>
+        </div>
+      </li>
+    </ul>
+
+    <div class="trust-pills">
+      <div class="trust-pill">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        No obligation, ever
+      </div>
+      <div class="trust-pill">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        30 minutes exactly
+      </div>
+      <div class="trust-pill">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        HVAC-specific analysis
+      </div>
+      <div class="trust-pill">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Real numbers, not a pitch deck
+      </div>
+      <div class="trust-pill">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        If there's nothing to recover, we'll tell you
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Calendly embed -->
+  <div class="right-panel">
+    <div class="rp-label">Select a time that works for you</div>
+    <div class="calendly-wrapper" id="calendly-container">
+      <!-- Calendly inline widget will load here -->
+    </div>
+    <p class="rp-bottom-note">
+      All calls are conducted via video or phone. Times shown in your local timezone.
+      <br>Questions before booking? Email <span style="color:var(--gold)">hello@qlarityglobal.com</span>
+    </p>
+  </div>
+</div>
+
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script>
+  // Initialize Calendly inline widget
+  function loadCalendly() {
+    if (window.Calendly) {
+      Calendly.initInlineWidget({
+        url: 'https://calendly.com/qlarityglobal/30min',
+        parentElement: document.getElementById('calendly-container'),
+        prefill: {},
+        utm: {}
+      });
+    } else {
+      // Calendly script not yet loaded, try again
+      setTimeout(loadCalendly, 500);
+    }
+  }
+
+  // Wait for Calendly script to load
+  document.querySelector('script[src*="calendly"]').addEventListener('load', loadCalendly);
+
+  // Fallback timeout: if Calendly hasn't loaded in 4 seconds, show direct link
+  setTimeout(() => {
+    const container = document.getElementById('calendly-container');
+    if (container && container.children.length === 0) {
+      container.style.display = 'flex';
+      container.innerHTML = `
+        <div class="cal-fallback" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:20px;text-align:center;padding:40px;">
+          <p style="font-size:16px;color:#637485;line-height:1.6">Click below to open the booking calendar in a new window.</p>
+          <a href="https://calendly.com/qlarityglobal/30min" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#C6A84E;color:#05070A;padding:16px 36px;border-radius:2px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;">
+            Book Your Free Alignment Call
+          </a>
+        </div>
+      `;
+    }
+  }, 4000);
+</script>
+</body>
+</html>
