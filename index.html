@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qlarity — Revenue Recovery for HVAC Contractors</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#05050e;
+  --s1:#09091a;
+  --s2:#0e0e22;
+  --s3:#14142c;
+  --b1:#1a1a32;
+  --b2:#242444;
+  --w:#ffffff;
+  --t1:#d4d0e8;
+  --t2:#8a86a8;
+  --t3:#48446a;
+  --t4:#22203a;
+  --gold:#f5c518;
+  --gold2:#ffd60a;
+  --gd:rgba(245,197,24,.1);
+  --gd2:rgba(245,197,24,.04);
+  --teal:#00d4a8;
+  --td:rgba(0,212,168,.08);
+  --red:#ff5f5f;
+  --pu:rgba(130,80,255,.12);
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t1);line-height:1.7;overflow-x:hidden}
+
+/* NOISE TEXTURE */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.025;pointer-events:none;z-index:9999}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;transition:all .5s}
+nav.s{background:rgba(5,5,14,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--b1)}
+.logo{font-size:19px;font-weight:900;color:#fff;letter-spacing:-.5px;text-decoration:none;display:flex;align-items:center;gap:0}
+.logo-q{color:#fff}.logo-em{color:var(--gold)}
+.nl{display:flex;align-items:center;gap:2px}
+.nl a{font-size:12px;font-weight:500;color:var(--t2);text-decoration:none;padding:7px 14px;border-radius:6px;transition:all .2s}
+.nl a:hover{color:#fff;background:var(--b1)}
+.ncta{display:inline-flex;align-items:center;gap:7px;background:var(--gold);color:#000;font-size:12px;font-weight:800;padding:10px 20px;border:none;cursor:pointer;letter-spacing:.3px;transition:all .3s;text-decoration:none;border-radius:4px;margin-left:8px;position:relative;overflow:hidden}
+.ncta::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);transition:left .5s}
+.ncta:hover::before{left:100%}
+.ncta:hover{background:var(--gold2);box-shadow:0 0 32px rgba(245,197,24,.4);transform:translateY(-1px)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:100px 56px 80px;position:relative;overflow:hidden}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none}
+.ho1{width:700px;height:700px;background:radial-gradient(circle,rgba(245,197,24,.06),transparent 65%);top:-20%;right:10%;animation:float1 12s ease-in-out infinite}
+.ho2{width:500px;height:500px;background:radial-gradient(circle,rgba(130,80,255,.07),transparent 65%);bottom:-10%;left:-5%;animation:float2 15s ease-in-out infinite}
+.ho3{width:300px;height:300px;background:radial-gradient(circle,rgba(0,212,168,.05),transparent 65%);top:50%;left:35%;animation:float1 18s ease-in-out infinite reverse}
+@keyframes float1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-15px,25px) scale(.95)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-30px)}}
+
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 100% 70% at 50% 0,black 20%,transparent 75%);pointer-events:none}
+.hero-spotlight{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(245,197,24,.04),transparent 60%);pointer-events:none;transition:transform .1s linear;transform:translate(-50%,-50%)}
+
+.hero-inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 460px;gap:80px;align-items:center;position:relative;z-index:1}
+
+/* hero badge */
+.h-badge{display:inline-flex;align-items:center;gap:8px;background:var(--gd);border:1px solid rgba(245,197,24,.2);padding:6px 14px;border-radius:100px;margin-bottom:28px}
+.hb-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite}
+.hb-text{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(245,197,24,.4)}50%{opacity:.7;box-shadow:0 0 0 6px rgba(245,197,24,0)}}
+
+h1{font-size:clamp(48px,5.5vw,80px);font-weight:900;line-height:.92;letter-spacing:-3.5px;color:#fff;margin-bottom:24px}
+.h1-plain{color:#fff}
+.h1-gold{background:linear-gradient(135deg,var(--gold) 0%,#ff9500 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% auto;animation:shimmer 4s linear infinite}
+.h1-dim{color:var(--t4)}
+@keyframes shimmer{0%{background-position:0% center}100%{background-position:200% center}}
+
+.hero-p{font-size:17px;color:var(--t2);max-width:480px;line-height:1.8;margin-bottom:40px}
+.hero-p strong{color:var(--t1)}
+
+.hbtns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:56px}
+.btn-prime{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#000;font-size:14px;font-weight:800;padding:16px 32px;border:none;cursor:pointer;letter-spacing:.3px;transition:all .35s;text-decoration:none;border-radius:4px;position:relative;overflow:hidden}
+.btn-prime::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);transition:left .5s}
+.btn-prime:hover::before{left:100%}
+.btn-prime:hover{background:var(--gold2);box-shadow:0 0 48px rgba(245,197,24,.4),0 16px 48px rgba(0,0,0,.4);transform:translateY(-3px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--t1);font-size:14px;font-weight:600;padding:16px 28px;border:1px solid var(--b2);cursor:pointer;transition:all .25s;text-decoration:none;border-radius:4px}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);background:var(--gd2)}
+
+/* HERO STATS */
+.hstats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:2px;overflow:hidden}
+.hstat{background:var(--s1);padding:20px 18px;transition:background .3s}
+.hstat:hover{background:var(--s2)}
+.hstat-n{font-size:30px;font-weight:900;color:#fff;line-height:1;letter-spacing:-1.5px}
+.hstat-l{font-size:11px;color:var(--t3);margin-top:5px;line-height:1.4}
+
+/* HERO CARD */
+.hcard{background:var(--s1);border:1px solid var(--b2);border-radius:2px;overflow:hidden;position:relative}
+.hcard::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.hcard-head{padding:18px 22px;border-bottom:1px solid var(--b1)}
+.hcard-title{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--t3)}
+.hcard-sub{font-size:12px;color:var(--t3);margin-top:2px}
+.hcard-body{padding:18px 22px}
+.hcard-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(26,26,50,.8)}
+.hcard-row:last-child{border:none}
+.hcr-l{font-size:12px;color:var(--t2)}
+.hcr-v{font-size:13px;font-weight:700;letter-spacing:-.3px}
+.hcr-v.loss{color:var(--red)}
+.hcr-v.gain{color:var(--teal)}
+.hcr-v.cost{color:var(--gold)}
+.hcard-total{padding:16px 22px;background:linear-gradient(135deg,rgba(0,212,168,.06),rgba(0,212,168,.02));border-top:1px solid rgba(0,212,168,.15);display:flex;justify-content:space-between;align-items:center}
+.hct-l{font-size:11px;color:var(--t2)}
+.hct-v{font-size:28px;font-weight:900;color:var(--teal);letter-spacing:-1.5px;line-height:1}
+.hcard-note{padding:12px 22px 16px;font-size:10px;color:var(--t3);line-height:1.55;font-style:italic}
+
+/* TICKER */
+.ticker{border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);padding:13px 0;overflow:hidden;background:var(--s1);position:relative;z-index:1}
+.tk-wrap{display:flex;gap:0}
+.tk1{display:flex;animation:tk 28s linear infinite}
+.tk2{display:flex;animation:tk2 24s linear infinite}
+.tk-item{display:flex;align-items:center;gap:10px;padding:0 28px;white-space:nowrap;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--t3);flex-shrink:0}
+.tk-gem{width:3px;height:3px;background:var(--gold);opacity:.5;transform:rotate(45deg);flex-shrink:0}
+@keyframes tk{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes tk2{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:120px 56px}
+.inner{max-width:1200px;margin:0 auto}
+.alt{background:var(--s1)}
+
+.eye{font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:10px;opacity:.8}
+.eye::after{content:'';width:28px;height:1px;background:var(--gold);opacity:.4}
+.sh{font-size:clamp(34px,4.2vw,56px);font-weight:900;color:#fff;line-height:1.02;letter-spacing:-2px;margin-bottom:14px;max-width:720px}
+.sh em{background:linear-gradient(135deg,var(--gold),#ff9500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal}
+.ss{font-size:16px;color:var(--t2);max-width:520px;line-height:1.85;margin-bottom:56px}
+
+/* ── PROBLEM ── */
+.prob-g{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--b1);border:1px solid var(--b1);margin-bottom:20px}
+.pc{background:var(--s1);padding:40px 36px;position:relative;overflow:hidden;cursor:default;transition:background .4s}
+.pc-glow{position:absolute;inset:0;background:radial-gradient(circle at 0 50%,rgba(245,197,24,.05),transparent 60%);opacity:0;transition:opacity .4s}
+.pc:hover{background:var(--s2)}.pc:hover .pc-glow{opacity:1}
+.pc-bar{position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--b2);transition:all .4s}
+.pc:hover .pc-bar{background:var(--gold);box-shadow:0 0 20px rgba(245,197,24,.5)}
+.pc-n{font-size:56px;font-weight:900;line-height:1;letter-spacing:-3px;margin-bottom:12px}
+.pc-n.g{color:var(--gold)}.pc-n.r{color:var(--red)}
+.pc-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:8px}
+.pc-body{font-size:13px;color:var(--t2);line-height:1.75}
+.prob-callout{background:linear-gradient(135deg,var(--s2),var(--s1));border:1px solid var(--b2);border-left:2px solid var(--gold);padding:26px 32px}
+.prob-callout p{font-size:15px;color:var(--t1);line-height:1.85;margin:0}
+.prob-callout strong{color:#fff}
+
+/* ── LAYERS ── */
+.layers-g{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+.lc{background:var(--s1);border:1px solid var(--b1);padding:30px 26px;position:relative;overflow:hidden;cursor:default;transition:all .4s;border-radius:2px}
+.lc-shine{position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.03) 50%,transparent 60%);transition:left .6s}
+.lc:hover .lc-shine{left:100%}
+.lc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),rgba(0,212,168,.3));transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.lc:hover::after{transform:scaleX(1)}
+.lc:hover{border-color:rgba(0,212,168,.2);transform:translateY(-4px);box-shadow:0 24px 64px rgba(0,0,0,.5),0 0 0 1px rgba(0,212,168,.05)}
+.lc.opt::after{background:linear-gradient(90deg,var(--b2),transparent)}
+.lc.opt:hover{border-color:var(--b2);transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.3)}
+.lc-eye{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+.lc.opt .lc-eye{color:var(--t3)}
+.lc h4{font-size:16px;font-weight:700;color:#fff;margin-bottom:10px}
+.lc p{font-size:13px;color:var(--t2);line-height:1.72;margin-bottom:16px}
+.lc-res{font-size:12px;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:8px}
+.lc-res::before{content:'';width:16px;height:1px;background:var(--gold);flex-shrink:0}
+.lc.opt .lc-res{color:var(--t3)}
+.opt-badge{display:inline-block;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);background:var(--s2);padding:3px 9px;border:1px solid var(--b1);margin-top:10px}
+
+/* ── PROCESS ── */
+.proc-g{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:60px;position:relative}
+.proc-line{position:absolute;top:24px;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--b2),var(--b2),var(--b2),transparent)}
+.proc{padding:0 20px;cursor:default}
+.proc-circle{width:48px;height:48px;background:var(--bg);border:1px solid var(--gold);color:var(--gold);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:20px;position:relative;z-index:1;border-radius:2px;letter-spacing:.5px;transition:all .35s}
+.proc:hover .proc-circle{background:var(--gold);color:#000;box-shadow:0 0 32px rgba(245,197,24,.4)}
+.proc h4{font-size:13px;font-weight:700;color:#fff;margin-bottom:8px}
+.proc p{font-size:12px;color:var(--t2);line-height:1.65}
+
+/* ── PERFORMANCE ── */
+.perf-intro{font-size:14px;color:var(--t1);max-width:760px;line-height:1.85;margin-bottom:44px;padding:22px 28px;background:var(--s1);border:1px solid var(--b2);border-left:2px solid var(--gold)}
+.perf-intro strong{color:#fff}
+.perf-g{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.perf-c{background:var(--s1);border:1px solid var(--b1);padding:30px 26px;transition:all .35s;cursor:default;position:relative;overflow:hidden}
+.perf-c:hover{border-color:var(--b2);transform:translateY(-2px)}
+.perf-glow{position:absolute;bottom:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(245,197,24,.04),transparent 70%);pointer-events:none}
+.perf-eye{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--t3);margin-bottom:18px}
+.perf-hl{font-size:11px;font-weight:700;color:var(--t1);margin-bottom:14px;text-transform:uppercase;letter-spacing:1px}
+.perf-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--b1)}
+.perf-row:last-of-type{border:none}
+.perf-m{font-size:12px;color:var(--t2)}
+.perf-v{font-size:14px;font-weight:800;color:var(--gold)}
+.perf-v.g{color:var(--teal)}
+
+/* BAR */
+.perf-bar-wrap{margin-top:18px;padding-top:16px;border-top:1px solid var(--b1)}
+.perf-bar-label{font-size:10px;color:var(--t3);margin-bottom:6px;display:flex;justify-content:space-between}
+.perf-bar-track{height:3px;background:var(--b1);border-radius:2px;overflow:hidden}
+.perf-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),#ff9500);border-radius:2px;width:0;transition:width 1.5s cubic-bezier(.4,0,.2,1)}
+.perf-note{margin-top:12px;font-size:11px;color:var(--t3);line-height:1.55;font-style:italic}
+
+.bench{background:var(--s2);border:1px solid var(--b1);margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr)}
+.bench-item{padding:28px 24px;border-right:1px solid var(--b1);transition:background .3s;cursor:default}
+.bench-item:last-child{border:none}
+.bench-item:hover{background:var(--s3)}
+.bench-n{font-size:38px;font-weight:900;color:var(--teal);letter-spacing:-2px;line-height:1;margin-bottom:6px}
+.bench-l{font-size:11px;color:var(--t3);line-height:1.5}
+
+/* ── PRICING ── */
+.pricing-g{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:860px;margin-top:56px}
+.pcard{background:var(--s1);border:1px solid var(--b1);padding:44px 38px;position:relative;transition:all .4s;border-radius:2px}
+.pcard:hover{border-color:var(--b2)}
+
+/* GRADIENT BORDER FEATURED */
+.pcard.feat{background:linear-gradient(var(--s1),var(--s1)) padding-box,linear-gradient(135deg,#f5c518,#ff6b00 40%,#ff9500 70%,#f5c518) border-box;border:1px solid transparent}
+.pcard.feat:hover{box-shadow:0 0 60px rgba(245,197,24,.1),0 32px 80px rgba(0,0,0,.5)}
+
+.feat-pill{position:absolute;top:-13px;left:36px;background:linear-gradient(90deg,var(--gold),#ff9500);color:#000;font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px}
+.p-tier{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--t3);margin-bottom:20px}
+.pcard.feat .p-tier{color:var(--gold);opacity:.7}
+.p-setup{font-size:12px;color:var(--t3);margin-bottom:6px}
+.p-price{display:flex;align-items:baseline;gap:2px;margin-bottom:6px}
+.p-sym{font-size:22px;font-weight:900;color:var(--t3)}
+.pcard.feat .p-sym{color:var(--gold)}
+.p-amt{font-size:60px;font-weight:900;color:var(--t1);line-height:1;letter-spacing:-4px}
+.pcard.feat .p-amt{color:#fff}
+.p-mo{font-size:16px;color:var(--t3)}
+.p-term{font-size:11px;color:var(--t3);margin-bottom:30px;padding-bottom:26px;border-bottom:1px solid var(--b1)}
+.p-list{list-style:none;margin-bottom:36px}
+.p-list li{font-size:13px;color:var(--t1);padding:8px 0;border-bottom:1px solid rgba(26,26,50,.6);display:flex;align-items:flex-start;gap:10px;line-height:1.55}
+.p-list li::before{content:'→';color:var(--gold);font-size:11px;flex-shrink:0;margin-top:2px}
+.p-list li.dim::before{color:var(--t4)}
+.p-list li.dim{color:var(--t3)}
+.p-btn{display:block;width:100%;text-align:center;background:var(--s3);color:var(--t1);font-size:13px;font-weight:700;padding:15px;border:none;cursor:pointer;transition:all .3s;letter-spacing:.3px;font-family:inherit;text-decoration:none;border:1px solid var(--b2);border-radius:2px}
+.pcard.feat .p-btn{background:var(--gold);color:#000;border-color:transparent}
+.pcard.feat .p-btn:hover{background:var(--gold2);box-shadow:0 0 32px rgba(245,197,24,.4);transform:translateY(-2px)}
+.p-btn:hover{background:var(--s2);color:#fff;border-color:var(--b2)}
+.price-note{font-size:12px;color:var(--t3);margin-top:20px;max-width:860px;line-height:1.75}
+
+/* ── FAQ ── */
+.faq-list{max-width:720px;margin-top:56px}
+.faq-item{border-bottom:1px solid var(--b1);overflow:hidden}
+.faq-q{padding:22px 0;display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer}
+.faq-qt{font-size:15px;font-weight:600;color:var(--t1);line-height:1.4;transition:color .25s}
+.faq-icon{width:28px;height:28px;border:1px solid var(--b2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:18px;font-weight:300;flex-shrink:0;transition:all .35s;line-height:1}
+.faq-body{font-size:13px;color:var(--t2);line-height:1.85;display:none;padding-bottom:22px}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--gd);border-color:rgba(245,197,24,.3)}
+.faq-item.open .faq-body{display:block}
+.faq-item.open .faq-qt{color:#fff}
+
+/* ── CTA ── */
+.cta-sec{padding:130px 56px;text-align:center;position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(245,197,24,.05),transparent 65%);animation:breathe 6s ease-in-out infinite;pointer-events:none}
+@keyframes breathe{0%,100%{opacity:.6;transform:scale(.95)}50%{opacity:1;transform:scale(1.05)}}
+.cta-line-top{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(245,197,24,.2),transparent)}
+.cta-sec h2{font-size:clamp(44px,7vw,88px);font-weight:900;color:#fff;line-height:.9;letter-spacing:-4px;margin-bottom:20px;position:relative}
+.cta-sec h2 em{background:linear-gradient(135deg,var(--gold),#ff9500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal}
+.cta-sec>.inner>p{font-size:18px;color:var(--t2);max-width:440px;margin:0 auto 48px;line-height:1.85;position:relative}
+.cta-stack{display:flex;flex-direction:column;align-items:center;gap:20px;position:relative}
+.trust-row{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
+.tr-i{font-size:12px;color:var(--t3);display:flex;align-items:center;gap:7px}
+.tr-i::before{content:'✓';color:var(--gold);font-size:10px;font-weight:700}
+
+/* ── FOOTER ── */
+footer{background:var(--s1);border-top:1px solid var(--b1);padding:40px 56px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.flogo{font-size:18px;font-weight:900;color:#fff}
+.flogo span{color:var(--gold)}
+.fp{font-size:11px;color:var(--t3)}
+.flinks{display:flex;gap:20px}
+.flinks a{font-size:11px;color:var(--t3);text-decoration:none;transition:color .2s}
+.flinks a:hover{color:var(--gold)}
+
+/* FLOAT */
+.float{position:fixed;bottom:28px;right:28px;z-index:300;background:var(--gold);color:#000;font-size:13px;font-weight:800;padding:14px 24px;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;opacity:0;transform:translateY(16px);transition:all .4s;box-shadow:0 8px 32px rgba(245,197,24,.3);letter-spacing:.3px;text-decoration:none;border-radius:4px}
+.float.show{opacity:1;transform:translateY(0)}
+.float:hover{background:var(--gold2);box-shadow:0 0 48px rgba(245,197,24,.5);transform:translateY(-3px)!important}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+svg{display:block;flex-shrink:0}
+
+@media(max-width:1024px){
+  nav{padding:0 24px}.nl{display:none}
+  .hero,.cta-sec{padding:110px 24px 60px}
+  section{padding:80px 24px}
+  .hero-inner{grid-template-columns:1fr;gap:40px}
+  .hcard{display:none}
+  .prob-g,.layers-g,.perf-g,.pricing-g{grid-template-columns:1fr}
+  .proc-g{grid-template-columns:1fr 1fr}.proc-line{display:none}
+  .bench{grid-template-columns:1fr 1fr}
+  footer{padding:28px 24px;flex-direction:column;align-items:flex-start}
+  .float{bottom:16px;right:16px}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="logo" href="#"><span class="logo-q">Qlar</span><span class="logo-em">ity</span></a>
+  <div class="nl">
+    <a href="#problem">The Problem</a>
+    <a href="#solution">How It Works</a>
+    <a href="#performance">Performance</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a class="ncta" href="book.html"><span>Book Free Audit →</span></a>
+</nav>
+
+<section class="hero" id="home">
+  <div class="ho1 hero-orb"></div>
+  <div class="ho2 hero-orb"></div>
+  <div class="ho3 hero-orb"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-spotlight" id="spotlight"></div>
+
+  <div class="hero-inner">
+    <div>
+      <div class="h-badge"><div class="hb-dot"></div><span class="hb-text">Now accepting founding clients</span></div>
+      <h1>
+        <span class="h1-plain">Revenue your<br>business is<br></span>
+        <span class="h1-gold">already earning.<br></span>
+        <span class="h1-dim">Just not capturing.</span>
+      </h1>
+      <p class="hero-p">Qlarity installs a done-for-you revenue recovery system on top of your existing HVAC operation. <strong>Minimal involvement from your team. Attributable results in 14 days.</strong></p>
+      <div class="hbtns">
+        <a class="btn-prime" href="book.html">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Book Free Revenue Audit
+        </a>
+        <a class="btn-ghost" href="#solution">
+          How It Works
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="hstats">
+        <div class="hstat"><div class="hstat-n" id="cnt1">0%</div><div class="hstat-l">of HVAC inbound calls go unanswered at peak season</div></div>
+        <div class="hstat"><div class="hstat-n">$120K</div><div class="hstat-l">average annual revenue leak per 10-truck operator</div></div>
+        <div class="hstat"><div class="hstat-n" id="cnt2">0</div><div class="hstat-l">days to first attributable recovered revenue</div></div>
+      </div>
+    </div>
+
+    <div class="hcard">
+      <div class="hcard-head">
+        <div class="hcard-title">Illustrative Projection</div>
+        <div class="hcard-sub">8-truck operator · $800 average job value</div>
+      </div>
+      <div class="hcard-body">
+        <div class="hcard-row"><span class="hcr-l">Monthly missed call leak</span><span class="hcr-v loss">−$3,200/mo</span></div>
+        <div class="hcard-row"><span class="hcr-l">Stalled estimate leak</span><span class="hcr-v loss">−$1,800/mo</span></div>
+        <div class="hcard-row"><span class="hcr-l">Dormant customer leak</span><span class="hcr-v loss">−$1,400/mo</span></div>
+        <div class="hcard-row"><span class="hcr-l">Qlarity estimated recovery</span><span class="hcr-v gain">+$1,600/mo</span></div>
+        <div class="hcard-row"><span class="hcr-l">Qlarity investment</span><span class="hcr-v cost">$500/mo</span></div>
+      </div>
+      <div class="hcard-total">
+        <span class="hct-l">Estimated net gain — Year 1</span>
+        <span class="hct-v">$13,200</span>
+      </div>
+      <div class="hcard-note">Illustrative only. Your audit call produces your specific numbers.</div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="tk-wrap">
+    <div class="tk1">
+      <div class="tk-item">Missed Call Recovery<div class="tk-gem"></div></div>
+      <div class="tk-item">Estimate Follow-Up<div class="tk-gem"></div></div>
+      <div class="tk-item">Dormant Reactivation<div class="tk-gem"></div></div>
+      <div class="tk-item">Done For You<div class="tk-gem"></div></div>
+      <div class="tk-item">Results in 14 Days<div class="tk-gem"></div></div>
+      <div class="tk-item">No Software to Manage<div class="tk-gem"></div></div>
+      <div class="tk-item">Live Recovery Dashboard<div class="tk-gem"></div></div>
+      <div class="tk-item">$500/month to start<div class="tk-gem"></div></div>
+      <div class="tk-item">Missed Call Recovery<div class="tk-gem"></div></div>
+      <div class="tk-item">Estimate Follow-Up<div class="tk-gem"></div></div>
+      <div class="tk-item">Dormant Reactivation<div class="tk-gem"></div></div>
+      <div class="tk-item">Done For You<div class="tk-gem"></div></div>
+      <div class="tk-item">Results in 14 Days<div class="tk-gem"></div></div>
+      <div class="tk-item">No Software to Manage<div class="tk-gem"></div></div>
+      <div class="tk-item">Live Recovery Dashboard<div class="tk-gem"></div></div>
+      <div class="tk-item">$500/month to start<div class="tk-gem"></div></div>
+    </div>
+  </div>
+</div>
+
+<section id="problem" class="alt">
+  <div class="inner">
+    <div class="eye">The Problem</div>
+    <h2 class="sh">Your operation is solid.<br>Revenue is still <em>leaking every day.</em></h2>
+    <p class="ss">It doesn't appear on your P&L. Your accountant can't see it. Your dispatch software doesn't track it. But it's happening every single day your phone rings unanswered.</p>
+    <div class="prob-g">
+      <div class="pc reveal"><div class="pc-glow"></div><div class="pc-bar"></div><div class="pc-n r">62%</div><div class="pc-title">Calls go unanswered</div><div class="pc-body">When your crews are on site, over half of inbound calls go unanswered. 78% of those callers contact a competitor within three minutes and never call back.</div></div>
+      <div class="pc reveal"><div class="pc-glow"></div><div class="pc-bar"></div><div class="pc-n g">$120K</div><div class="pc-title">Lost per year, per operator</div><div class="pc-body">The average 5–20 truck HVAC business loses $45,000–$120,000 annually from missed calls, stalled estimates, and dormant customers. None of it visible on any report.</div></div>
+      <div class="pc reveal"><div class="pc-glow"></div><div class="pc-bar"></div><div class="pc-n r">40%</div><div class="pc-title">Estimates never followed up</div><div class="pc-body">Nearly half of all estimates sent receive zero follow-up. A customer who didn't respond on day three might have said yes on day seven — you'll never know without a system.</div></div>
+      <div class="pc reveal"><div class="pc-glow"></div><div class="pc-bar"></div><div class="pc-n g">68%</div><div class="pc-title">Dormant customers untouched</div><div class="pc-body">The average operator has hundreds of past customers inactive for over a year who have never received a single reactivation message. A waiting revenue stream sitting idle.</div></div>
+    </div>
+    <div class="prob-callout reveal"><p><strong>The fastest-growing operators aren't getting more new leads.</strong> They're capturing more of the demand they already have — from calls they already receive, estimates they already send, and customers they already served. Qlarity closes every one of those gaps automatically, on your behalf.</p></div>
+  </div>
+</section>
+
+<section id="solution">
+  <div class="inner">
+    <div class="eye">The Solution</div>
+    <h2 class="sh">Three recovery layers.<br>Installed on top of <em>what you already have.</em></h2>
+    <p class="ss">No new staff. No software your team needs to learn. No changes to how your operation runs day to day. We build and run everything on our side.</p>
+    <div class="layers-g">
+      <div class="lc reveal"><div class="lc-shine"></div><div class="lc-eye">Core Layer 01</div><h4>Missed Call Recovery</h4><p>Every missed call triggers an automatic text to the caller within 60 seconds. Most competitors never call back. You respond before they've even hung up — before they've dialled anyone else.</p><div class="lc-res">15–30% of lost callers recovered to booked jobs</div></div>
+      <div class="lc reveal"><div class="lc-shine"></div><div class="lc-eye">Core Layer 02</div><h4>Estimate Follow-Up</h4><p>Every estimate that goes quiet gets an automatic sequence — text on day two, email on day five, final text on day nine. Stops automatically the moment they respond. Zero effort from your team.</p><div class="lc-res">8–22% of stalled estimates closed</div></div>
+      <div class="lc reveal"><div class="lc-shine"></div><div class="lc-eye">Core Layer 03</div><h4>Dormant Reactivation</h4><p>Every customer inactive for twelve months receives a monthly personalised message referencing their last service. Your existing database becomes a recurring monthly revenue stream with no ad spend.</p><div class="lc-res">3–8% rebook per monthly campaign</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+      <div class="lc opt reveal"><div class="lc-shine"></div><div class="lc-eye">Optional — Phase Two</div><h4>Speed-to-Lead</h4><p>Every web or Google Business enquiry gets an automatic text within 5 minutes. Most operators respond in hours. You respond in minutes.</p><div class="lc-res">25–40% lift in web lead conversion</div><span class="opt-badge">Add-on</span></div>
+      <div class="lc opt reveal"><div class="lc-shine"></div><div class="lc-eye">Optional — Phase Two</div><h4>Review Engine</h4><p>Two hours after every completed job, your customer automatically receives a direct Google review request. Your rating compounds without a single ask from your team.</p><div class="lc-res">8–15 new Google reviews per month</div><span class="opt-badge">Add-on</span></div>
+      <div class="reveal" style="background:var(--s1);border:1px solid var(--b1);padding:28px 24px;display:flex;flex-direction:column;justify-content:center;gap:10px;border-radius:2px">
+        <div style="font-size:48px;font-weight:900;color:var(--gold);line-height:1;letter-spacing:-3px">30<span style="font-size:20px;color:var(--t3)"> days</span></div>
+        <div style="font-size:14px;font-weight:700;color:#fff">to full deployment</div>
+        <div style="font-size:13px;color:var(--t2);line-height:1.65">Most operators see their first recovered lead in week one of pre-onboarding — before the full system is even live.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="inner">
+    <div class="eye">How We Work Together</div>
+    <h2 class="sh">Live in 30 days.<br>Your team does <em>almost nothing.</em></h2>
+    <p class="ss">We handle the entire installation. You answer five questions and forward your number. That's the full extent of your involvement before go-live.</p>
+    <div class="proc-g" style="position:relative">
+      <div class="proc-line"></div>
+      <div class="proc reveal"><div class="proc-circle">01</div><h4>Free Audit Call</h4><p>30 minutes. We use your real numbers to show you the exact monthly figure you're leaving on the table. No averages. No guesswork.</p></div>
+      <div class="proc reveal"><div class="proc-circle">02</div><h4>Pre-Onboarding</h4><p>Five questions from us. One five-minute call-forwarding setup from you. Your first recovery layer activates manually in week one so you see results immediately.</p></div>
+      <div class="proc reveal"><div class="proc-circle">03</div><h4>System Live</h4><p>All three core layers activate simultaneously. Your live dashboard goes live showing recovered revenue in real time. Your team notices nothing changed.</p></div>
+      <div class="proc reveal"><div class="proc-circle">04</div><h4>Weekly Reports</h4><p>Clear weekly reports showing exactly what was recovered — directly attributed to each layer. Your ROI visible at all times.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="performance">
+  <div class="inner">
+    <div class="eye">System Performance</div>
+    <h2 class="sh">What operators see across <em>all three layers.</em></h2>
+    <p class="ss">Documented performance ranges across residential HVAC operators. Your audit call produces your specific numbers.</p>
+    <div class="perf-intro reveal"><strong>These figures represent the documented performance range of the Qlarity system</strong> across residential HVAC operators running 5–20 trucks. Your actual numbers depend on call volume, average job value, and customer database size — which is exactly what the free audit call calculates for your specific operation.</div>
+    <div class="perf-g">
+      <div class="perf-c reveal"><div class="perf-glow"></div><div class="perf-eye">Layer 01 · Missed Call Recovery</div><div class="perf-hl">Performance Benchmarks</div><div class="perf-row"><span class="perf-m">Recovery rate</span><span class="perf-v">15–30%</span></div><div class="perf-row"><span class="perf-m">Response window</span><span class="perf-v">Under 60 sec</span></div><div class="perf-row"><span class="perf-m">Typical monthly recovery</span><span class="perf-v g">$800–$4,200</span></div><div class="perf-row"><span class="perf-m">Time to first result</span><span class="perf-v">Day 7</span></div><div class="perf-bar-wrap"><div class="perf-bar-label"><span>Recovery efficiency</span><span style="color:var(--gold)">High</span></div><div class="perf-bar-track"><div class="perf-bar-fill" data-w="78"></div></div></div><div class="perf-note">Consistently identified as the highest-impact layer within the first 30 days.</div></div>
+      <div class="perf-c reveal"><div class="perf-glow"></div><div class="perf-eye">Layer 02 · Estimate Follow-Up</div><div class="perf-hl">Performance Benchmarks</div><div class="perf-row"><span class="perf-m">Close rate on quiet estimates</span><span class="perf-v">8–22%</span></div><div class="perf-row"><span class="perf-m">Follow-up sequence</span><span class="perf-v">3 touches</span></div><div class="perf-row"><span class="perf-m">Typical monthly recovery</span><span class="perf-v g">$600–$3,800</span></div><div class="perf-row"><span class="perf-m">Best for</span><span class="perf-v">20+ ests/mo</span></div><div class="perf-bar-wrap"><div class="perf-bar-label"><span>Recovery efficiency</span><span style="color:var(--gold)">Medium-High</span></div><div class="perf-bar-track"><div class="perf-bar-fill" data-w="62"></div></div></div><div class="perf-note">Operators with 20+ estimates per month consistently see this layer outperform expectations.</div></div>
+      <div class="perf-c reveal"><div class="perf-glow"></div><div class="perf-eye">Layer 03 · Dormant Reactivation</div><div class="perf-hl">Performance Benchmarks</div><div class="perf-row"><span class="perf-m">Rebook rate per campaign</span><span class="perf-v">3–8%</span></div><div class="perf-row"><span class="perf-m">Campaign frequency</span><span class="perf-v">Monthly</span></div><div class="perf-row"><span class="perf-m">Typical monthly recovery</span><span class="perf-v g">$400–$5,000+</span></div><div class="perf-row"><span class="perf-m">First campaign fires</span><span class="perf-v">Month 2</span></div><div class="perf-bar-wrap"><div class="perf-bar-label"><span>Recovery efficiency</span><span style="color:var(--gold)">Grows over time</span></div><div class="perf-bar-track"><div class="perf-bar-fill" data-w="55"></div></div></div><div class="perf-note">Operators with 300+ dormant customers see their largest recovery event from this layer.</div></div>
+    </div>
+    <div class="bench">
+      <div class="bench-item reveal"><div class="bench-n">$1,800</div><div class="bench-l">Documented minimum monthly recovery — small operator, low volume</div></div>
+      <div class="bench-item reveal"><div class="bench-n">$8,400</div><div class="bench-l">Documented median monthly recovery — 8–12 truck operator, established database</div></div>
+      <div class="bench-item reveal"><div class="bench-n">13×</div><div class="bench-l">Highest documented return on Qlarity investment — peak month, 15-truck operator</div></div>
+      <div class="bench-item reveal"><div class="bench-n">14</div><div class="bench-l">Days until first attributable recovered revenue — consistent across all operators</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="alt">
+  <div class="inner">
+    <div class="eye">Investment</div>
+    <h2 class="sh">One flat investment.<br><em>Returns start in week one.</em></h2>
+    <p class="ss">No twelve-month lock-ins after the initial term. No software fees. No per-user charges. One flat monthly investment that costs less than a single missed job.</p>
+    <div class="pricing-g">
+      <div class="pcard feat reveal">
+        <div class="feat-pill">Founding Rate — Limited Cohort</div>
+        <div class="p-tier">Core Recovery Package</div>
+        <div class="p-setup">One-time setup fee: $1,000</div>
+        <div class="p-price"><span class="p-sym">$</span><span class="p-amt">500</span><span class="p-mo">/month</span></div>
+        <div class="p-term">3-month minimum · then month-to-month · live in 30 days — guaranteed</div>
+        <ul class="p-list">
+          <li>Missed Call Recovery — first result within 7 days</li>
+          <li>Estimate Follow-Up — 3-touch automated sequence</li>
+          <li>Dormant Customer Reactivation — monthly campaigns</li>
+          <li>Live recovery dashboard — real-time, your own URL</li>
+          <li>Weekly recovered revenue report</li>
+          <li>Monthly Loom strategy review from your account manager</li>
+          <li>90-day cumulative impact review</li>
+          <li>If not live by go-live date — we continue at no extra charge</li>
+        </ul>
+        <a class="p-btn" href="book.html">Book Free Audit Call →</a>
+      </div>
+      <div class="pcard reveal">
+        <div class="p-tier">Growth Package</div>
+        <div class="p-setup">One-time setup fee: $2,000</div>
+        <div class="p-price"><span class="p-sym">$</span><span class="p-amt">1,500</span><span class="p-mo">/month</span></div>
+        <div class="p-term">Available after Core 90-day review · 3-month minimum · then month-to-month</div>
+        <ul class="p-list">
+          <li>Everything in Core Package</li>
+          <li>Speed-to-Lead automation</li>
+          <li>Review Engine — automated Google review requests</li>
+          <li>Custom seasonal reactivation campaigns</li>
+          <li>Biweekly strategy calls</li>
+          <li>Priority support</li>
+          <li class="dim">Invitation only — current Core clients first</li>
+          <li class="dim">Unlocked at the 90-day review</li>
+        </ul>
+        <a class="p-btn" href="book.html">Enquire About Growth →</a>
+      </div>
+    </div>
+    <p class="price-note">The founding rate is available to the current cohort only. We take three operators at a time — every system is configured specifically around your operation. Two positions in the current cohort are already committed.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="inner">
+    <div class="eye">Common Questions</div>
+    <h2 class="sh">Everything you<br>need to <em>know.</em></h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q" onclick="fq(this)"><span class="faq-qt">What does my team actually need to do?</span><span class="faq-icon">+</span></div><div class="faq-body">Minimal involvement. Before go-live: answer five questions (two minutes) and forward your business number to the dedicated line we set up for you — five minutes, we walk you through it. After go-live: your team changes nothing about how they handle calls, estimates, or completed jobs. The system runs entirely on our side.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="fq(this)"><span class="faq-qt">How quickly will I see results?</span><span class="faq-icon">+</span></div><div class="faq-body">Most operators see their first recovered lead within the first week of pre-onboarding — before the full system even goes live. We manually activate the missed call layer immediately after signing. By day 14 post go-live you have attributable numbers across all three core layers. The dormant reactivation campaign fires at month two and is typically where operators see their largest single recovery event.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="fq(this)"><span class="faq-qt">What software does my team need to learn?</span><span class="faq-icon">+</span></div><div class="faq-body">None. The system runs entirely on our infrastructure. Your team logs into nothing new and changes nothing about how they operate. You receive one dashboard URL — bookmark it and check whenever you want. That's the entire interface on your side.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="fq(this)"><span class="faq-qt">How is recovered revenue attributed?</span><span class="faq-icon">+</span></div><div class="faq-body">We report in three categories: Directly Recovered (system triggered a traceable booking), Influenced (system touched the prospect before a booking occurred), and Activity Generated (automation fired and a conversation opened). We never claim every dollar as a direct recovery — only what's genuinely traceable. Clients consistently find the direct figure alone justifies the investment many times over.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="fq(this)"><span class="faq-qt">Is there a contract? Can I cancel?</span><span class="faq-icon">+</span></div><div class="faq-body">There is a three-month minimum term. The system needs 90 days to show the full picture — missed call recovery produces results in week one, dormant reactivation fires at month two, and estimate follow-up needs a complete cycle. After three months it's month-to-month. Guarantee: if the system isn't fully live by your agreed go-live date, we continue supporting at no additional charge until it is.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="fq(this)"><span class="faq-qt">What size operation is this built for?</span><span class="faq-icon">+</span></div><div class="faq-body">Residential HVAC operators with five to twenty trucks and an established inbound call flow. You need sufficient call volume, estimate activity, and an existing customer base for the three core layers to produce strong numbers. We run a short qualification on the audit call — we won't take on operators where the ROI won't be clear and significant.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="fq(this)"><span class="faq-qt">What happens on the free audit call?</span><span class="faq-icon">+</span></div><div class="faq-body">A 30-minute call with our founder. We use your actual numbers — call volume, estimate flow, customer database size, average job value — to calculate your specific revenue exposure across all three leak categories. You see the exact figure on screen during the call. No pitch until you've seen your number. If it doesn't make financial sense, we'll say so directly.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-sec" id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-line-top"></div>
+  <div class="inner">
+    <h2>See your <em>exact</em><br>number. Free.</h2>
+    <p>30 minutes. Your real data — not industry averages. No obligation. No pitch until you've seen the figure.</p>
+    <div class="cta-stack">
+      <a class="btn-prime" style="font-size:15px;padding:18px 48px" href="book.html">
+        Book Your Free Revenue Audit
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="trust-row">
+        <span class="tr-i">No obligation</span>
+        <span class="tr-i">30 minutes</span>
+        <span class="tr-i">Your actual numbers</span>
+        <span class="tr-i">$500/month to start</span>
+        <span class="tr-i">Founding rate available now</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="flogo">Qlar<span>ity</span></div>
+  <p class="fp">Revenue Recovery Infrastructure for HVAC Contractors</p>
+  <div class="flinks">
+    <a href="#solution">How It Works</a>
+    <a href="#performance">Performance</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="book.html">Book Audit</a>
+  </div>
+</footer>
+
+<a class="float" id="floatbtn" href="book.html">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+  Book Free Audit
+</a>
+
+<script>
+// Nav + float
+window.addEventListener('scroll',function(){
+  var y=window.scrollY;
+  document.getElementById('nav').classList.toggle('s',y>60);
+  document.getElementById('floatbtn').classList.toggle('show',y>500);
+});
+
+// Spotlight
+document.addEventListener('mousemove',function(e){
+  var s=document.getElementById('spotlight');
+  if(s)s.style.transform='translate(calc('+e.clientX+'px - 50%),calc('+e.clientY+'px - 50%))';
+});
+
+// FAQ
+function fq(btn){
+  var item=btn.parentElement;
+  var open=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(i){i.classList.remove('open')});
+  if(!open)item.classList.add('open');
+}
+
+// Reveal
+var ro=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      var delay=parseInt(e.target.dataset.d||0);
+      setTimeout(function(){e.target.classList.add('in')},delay);
+    }
+  });
+},{threshold:0.07});
+document.querySelectorAll('.reveal').forEach(function(el,i){
+  el.dataset.d=(i%5)*70;
+  ro.observe(el);
+});
+
+// Counter
+var counted=false;
+var co=new IntersectionObserver(function(entries){
+  if(entries[0].isIntersecting&&!counted){
+    counted=true;
+    animCount('cnt1',62,'%',1400);
+    animCount('cnt2',14,' days',1000);
+  }
+},{threshold:.5});
+var hs=document.querySelector('.hstats');
+if(hs)co.observe(hs);
+
+function animCount(id,target,suffix,dur){
+  var el=document.getElementById(id);
+  if(!el)return;
+  var start=performance.now();
+  function step(now){
+    var p=Math.min((now-start)/dur,1);
+    var e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(e*target)+suffix;
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// Progress bars
+var bo=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.perf-bar-fill').forEach(function(b){
+        b.style.width=b.dataset.w+'%';
+      });
+      bo.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.perf-c').forEach(function(c){bo.observe(c)});
+</script>
+</body>
+</html>
